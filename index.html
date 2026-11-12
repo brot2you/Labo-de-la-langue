@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRL Lab · réflexion sur la langue en anglais</title>
+<meta name="description" content="Construire des PRL d'anglais du collège au lycée : repérage des points de langue dans un texte, déroulés didactiques, banque et export.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖍️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F5FF; --dot:#E7E2FF; --ink:#231A4F; --muted:#6B6596; --card:#FFFFFF; --soft:#F3F0FF; --line:#E2DCFB; --line2:#CFC6F7;
+  --violet:#6C3BFF; --violet-d:#4A22C9; --on-violet:#FFFFFF; --pink:#FF5FA8;
+  --p:#FFC2E2; --g:#B5F3CD; --b:#BFE5FF; --y:#FFF08F; --o:#FFD6A3; --l:#E2D3FF;
+  --pS:#E2378F; --gS:#11A866; --bS:#1E8FD8; --yS:#C9A200; --oS:#E07B00; --lS:#8B5CF6;
+  --mark-ink:#231A4F; --r-lg:22px; --r-md:16px; --r-sm:12px; --bnav:0px;
+  --f-display:"Bricolage Grotesque", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+:root[data-theme="dark"]{
+  --bg:#1A1636; --dot:#26204A; --ink:#EEEBFF; --muted:#B1ABDB; --card:#251F4A; --soft:#2E2758; --line:#3A3268; --line2:#4A4180;
+  --violet:#9A7DFF; --violet-d:#6C4FE0; --on-violet:#1A1636; color-scheme: dark;
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+html{ scroll-padding-top:calc(env(safe-area-inset-top,0px) + 90px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{
+  margin:0; background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.55;
+  background-image:radial-gradient(var(--dot) 1.4px, transparent 1.5px); background-size:22px 22px; -webkit-font-smoothing:antialiased;
+}
+body::before{ content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--bg); }
+button,input,select,textarea{ font:inherit; color:inherit; }
+:focus-visible{ outline:3px solid var(--violet); outline-offset:2px; }
+.wrap{ max-width:1180px; margin:0 auto; padding:0 18px calc(80px + var(--bnav)); }
+
+/* Header */
+.top{ padding:22px 0 6px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.logo{ font-family:var(--f-display); font-weight:800; font-size:clamp(2rem,6vw,3rem); line-height:.95; letter-spacing:-.03em; margin:0; position:relative; display:inline-block; padding:0 .1em; }
+.logo::before{ content:""; position:absolute; left:0; right:-.08em; bottom:.05em; height:.45em; background:var(--y); transform:rotate(-2deg); z-index:-1; border-radius:6px 12px 8px 14px; }
+.tag{ margin:4px 0 0; color:var(--muted); font-size:.95rem; max-width:44ch; }
+.theme-btn{ border:2px solid var(--line); background:var(--card); border-radius:999px; padding:8px 14px; cursor:pointer; font-weight:700; font-size:.88rem; white-space:nowrap; }
+
+/* Nav: top on desktop, bottom on mobile */
+.nav{ position:sticky; top:env(safe-area-inset-top,0px); z-index:20; padding:10px 0 12px; background:linear-gradient(var(--bg) 75%, transparent); }
+.nav-in{ display:flex; gap:8px; background:var(--card); border:2px solid var(--line); border-radius:999px; padding:6px; width:max-content; max-width:100%; }
+.tab{ border:0; background:transparent; border-radius:999px; padding:10px 18px; cursor:pointer; font-family:var(--f-display); font-weight:700; font-size:1rem; display:flex; align-items:center; gap:8px; color:var(--muted); }
+.tab .ico{ font-size:1.15rem; line-height:1; }
+.tab[aria-selected="true"]{ background:var(--violet); color:var(--on-violet); }
+.tab .n{ min-width:1.6em; padding:0 6px; border-radius:999px; background:var(--y); color:var(--mark-ink); font-size:.78rem; text-align:center; }
+@media (max-width:760px){
+  :root{ --bnav:72px; }
+  .nav{ position:fixed; top:auto; bottom:0; left:0; right:0; padding:0 0 env(safe-area-inset-bottom,0px); background:var(--card); border-top:2px solid var(--line); }
+  .nav-in{ width:100%; border:0; border-radius:0; padding:6px 4px; justify-content:space-around; background:transparent; }
+  .tab{ flex:1 1 0; flex-direction:column; gap:2px; padding:6px 2px; font-size:.74rem; border-radius:14px; position:relative; }
+  .tab .ico{ font-size:1.35rem; }
+  .tab .n{ position:absolute; top:2px; right:18%; }
+  .tab .long{ display:none; }
+}
+@media (min-width:761px){ .tab .short{ display:none; } }
+
+/* Views */
+.view{ display:none; }
+.view.on{ display:block; animation:pop .22s ease-out; }
+@keyframes pop{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:none;} }
+@media (prefers-reduced-motion: reduce){ .view.on{ animation:none; } }
+.grid2{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:20px; align-items:start; }
+@media (max-width:960px){ .grid2{ grid-template-columns:1fr; } }
+
+.panel{ background:var(--card); border:2px solid var(--line); border-radius:var(--r-lg); box-shadow:0 6px 0 var(--line); padding:20px; }
+.panel + .panel{ margin-top:20px; }
+.panel h2,.panel h3{ font-family:var(--f-display); letter-spacing:-.01em; line-height:1.15; margin:0 0 10px; }
+.panel h2{ font-size:1.4rem; }
+.panel h3{ font-size:1.12rem; }
+.hint{ color:var(--muted); font-size:.92rem; margin:0 0 12px; }
+label.f{ display:block; font-weight:700; font-size:.92rem; margin:14px 0 6px; }
+.in{ width:100%; border:2px solid var(--line); border-radius:var(--r-sm); background:var(--soft); padding:11px 12px; font-size:1rem; min-height:46px; }
+.in:focus{ border-color:var(--violet); background:var(--card); outline:none; }
+textarea.in{ min-height:110px; resize:vertical; line-height:1.5; }
+textarea.big{ min-height:220px; }
+.row{ display:flex; gap:10px; flex-wrap:wrap; }
+.row > *{ flex:1 1 150px; }
+.two{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:700px){ .two{ grid-template-columns:1fr; } }
+
+/* Buttons */
+.btns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; align-items:center; }
+.btn{ border:2px solid var(--line2); background:var(--card); border-radius:999px; padding:11px 18px; min-height:46px; cursor:pointer; font-weight:700; box-shadow:0 3px 0 var(--line2); display:inline-flex; align-items:center; justify-content:center; gap:8px; }
+.btn:active{ transform:translateY(3px); box-shadow:none; }
+.btn.main{ background:var(--violet); color:var(--on-violet); border-color:var(--violet-d); box-shadow:0 4px 0 var(--violet-d); }
+.btn.hot{ background:var(--pink); color:#fff; border-color:#C9337D; box-shadow:0 4px 0 #C9337D; }
+.btn.sm{ padding:7px 13px; min-height:38px; font-size:.88rem; }
+.btn.ghost{ border-color:transparent; box-shadow:none; background:transparent; color:var(--muted); }
+.btn.wide{ width:100%; }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+
+/* Steps in analyse */
+.step{ display:flex; align-items:center; gap:10px; margin:0 0 6px; }
+.step b{ width:30px; height:30px; flex:0 0 30px; border-radius:50%; background:var(--y); color:var(--mark-ink); display:grid; place-items:center; font-family:var(--f-display); }
+.step h3{ margin:0; }
+.sep{ height:2px; background:var(--line); margin:18px 0; border:0; }
+.seg{ display:flex; flex-wrap:wrap; gap:6px; }
+.seg button{ border:2px solid var(--line); background:var(--soft); border-radius:999px; padding:8px 14px; min-height:42px; cursor:pointer; font-weight:700; font-size:.93rem; }
+.seg button[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:var(--card); }
+.info{ margin-top:10px; padding:10px 12px; border-radius:var(--r-sm); background:var(--soft); font-size:.9rem; color:var(--muted); }
+.info b{ color:var(--ink); }
+.summary{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; }
+.summary .chips{ display:flex; flex-wrap:wrap; gap:6px; }
+
+/* Results */
+.scan{ background:var(--soft); border-radius:var(--r-md); padding:16px; font-size:1.05rem; line-height:2.05; white-space:pre-wrap; word-wrap:break-word; max-height:52vh; overflow:auto; }
+.mk{ color:var(--mark-ink); border-radius:4px; padding:1px 1px; box-decoration-break:clone; -webkit-box-decoration-break:clone; cursor:pointer; }
+.ul{ text-decoration-line:underline; text-decoration-style:wavy; text-decoration-thickness:2px; text-underline-offset:5px; cursor:pointer; }
+.legend{ display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 0; }
+.chip{ display:inline-flex; align-items:center; gap:6px; border:2px solid var(--line); border-radius:999px; padding:3px 10px; font-size:.82rem; font-weight:700; background:var(--card); }
+.sw{ width:12px; height:12px; border-radius:50%; display:inline-block; }
+.stats{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.stat{ border-radius:var(--r-sm); padding:6px 12px; background:var(--soft); font-size:.9rem; }
+.stat b{ font-family:var(--f-display); font-size:1.25rem; margin-right:4px; }
+.rtabs{ display:flex; gap:6px; background:var(--soft); border-radius:999px; padding:5px; margin:18px 0 12px; }
+.rtabs button{ flex:1; border:0; background:transparent; border-radius:999px; padding:10px; font-family:var(--f-display); font-weight:700; cursor:pointer; color:var(--muted); min-height:44px; }
+.rtabs button[aria-selected="true"]{ background:var(--card); color:var(--ink); box-shadow:0 2px 0 var(--line2); }
+.filters{ display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px; scrollbar-width:none; }
+.filters::-webkit-scrollbar{ display:none; }
+.filters button{ flex:0 0 auto; border:2px solid var(--line); background:var(--card); border-radius:999px; padding:6px 12px; font-weight:700; font-size:.85rem; cursor:pointer; }
+.filters button[aria-pressed="true"]{ border-color:var(--violet); color:var(--violet); background:var(--soft); }
+.pts{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; }
+.pt{ position:relative; border:2px solid var(--line); border-radius:var(--r-md); background:var(--card); padding:14px 14px 12px 18px; overflow:hidden; display:flex; flex-direction:column; gap:4px; }
+.pt::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:7px; background:var(--c); }
+.pt.sel{ border-color:var(--violet); box-shadow:0 4px 0 var(--line2); }
+.pt h4{ margin:0; font-family:var(--f-display); font-size:1.04rem; line-height:1.2; }
+.pt .ex{ font-size:.88rem; color:var(--muted); margin:2px 0; font-style:italic; }
+.pt .acts{ display:flex; gap:8px; flex-wrap:wrap; margin-top:auto; padding-top:8px; }
+.meta{ display:flex; flex-wrap:wrap; gap:6px; }
+.badge{ border-radius:999px; padding:2px 9px; font-size:.76rem; font-weight:700; background:var(--soft); color:var(--ink); }
+.badge.ok{ background:var(--g); color:var(--mark-ink); }
+.badge.core{ background:var(--y); color:var(--mark-ink); }
+.badge.up{ background:var(--b); color:var(--mark-ink); }
+.badge.far{ background:var(--l); color:var(--mark-ink); }
+.empty{ text-align:center; padding:30px 16px; color:var(--muted); }
+.empty .big{ font-family:var(--f-display); font-size:1.25rem; color:var(--ink); margin-bottom:6px; }
+.empty .emo{ font-size:2.4rem; line-height:1; margin-bottom:8px; }
+
+/* Builder accordion */
+.progress{ display:flex; gap:6px; margin:0 0 14px; }
+.progress span{ flex:1; height:8px; border-radius:99px; background:var(--line); }
+.progress span.done{ background:var(--g); }
+.progress span.cur{ background:var(--violet); }
+.acc{ background:var(--card); border:2px solid var(--line); border-radius:var(--r-lg); margin-bottom:12px; overflow:hidden; }
+.acc.open{ border-color:var(--line2); box-shadow:0 6px 0 var(--line); }
+.acc-h{ width:100%; display:flex; align-items:center; gap:12px; padding:14px 16px; border:0; background:transparent; cursor:pointer; text-align:left; min-height:64px; }
+.acc-n{ width:34px; height:34px; flex:0 0 34px; border-radius:50%; display:grid; place-items:center; font-family:var(--f-display); font-weight:800; background:var(--soft); color:var(--muted); }
+.acc.open .acc-n{ background:var(--violet); color:var(--on-violet); }
+.acc.ok .acc-n{ background:var(--g); color:var(--mark-ink); }
+.acc-t{ flex:1; min-width:0; }
+.acc-t strong{ display:block; font-family:var(--f-display); font-size:1.08rem; }
+.acc-t small{ display:block; color:var(--muted); font-size:.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.acc-arrow{ font-size:1.1rem; color:var(--muted); transition:transform .2s; }
+.acc.open .acc-arrow{ transform:rotate(180deg); }
+.acc-b{ padding:0 16px 18px; display:none; }
+.acc.open .acc-b{ display:block; }
+.acc-b > label.f:first-child{ margin-top:0; }
+.next{ display:flex; justify-content:flex-end; margin-top:16px; }
+
+/* Phases */
+.ph{ border:2px solid var(--line); border-radius:var(--r-md); background:var(--soft); margin-bottom:10px; overflow:hidden; }
+.ph-h{ display:flex; align-items:center; gap:10px; padding:10px 12px; cursor:pointer; width:100%; border:0; background:transparent; text-align:left; min-height:56px; }
+.ph-num{ flex:0 0 30px; width:30px; height:30px; border-radius:50%; background:var(--y); color:var(--mark-ink); display:grid; place-items:center; font-family:var(--f-display); font-weight:800; font-size:.92rem; }
+.ph-tt{ flex:1; min-width:0; font-weight:700; }
+.ph-tt small{ display:block; font-weight:400; color:var(--muted); font-size:.82rem; }
+.ph-min{ font-family:var(--f-display); font-weight:800; white-space:nowrap; }
+.ph-b{ display:none; padding:0 12px 12px; }
+.ph.open .ph-b{ display:block; }
+.ph.open{ background:var(--card); border-color:var(--line2); }
+.ph-grid{ display:grid; grid-template-columns:1fr 100px 160px; gap:8px; }
+@media (max-width:600px){ .ph-grid{ grid-template-columns:1fr 1fr; } .ph-grid .in:first-child{ grid-column:1 / -1; } }
+.ph textarea.in{ margin-top:8px; min-height:120px; }
+.ph-tools{ display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.dur{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 14px; border-radius:var(--r-sm); background:var(--soft); margin-bottom:12px; }
+.total{ font-family:var(--f-display); font-weight:800; font-size:1.15rem; }
+.total.over{ color:#E0245E; }
+
+/* Action bar */
+.actionbar{ position:fixed; left:0; right:0; bottom:calc(var(--bnav) + env(safe-area-inset-bottom,0px)); z-index:15; display:none; padding:10px 12px; background:linear-gradient(transparent, var(--bg) 35%); }
+.actionbar.on{ display:block; }
+.actionbar-in{ max-width:1180px; margin:0 auto; background:var(--card); border:2px solid var(--line2); border-radius:999px; padding:6px 6px 6px 16px; display:flex; align-items:center; gap:8px; box-shadow:0 6px 18px rgba(35,26,79,.12); }
+.actionbar-in .t{ flex:1; min-width:0; font-weight:700; font-size:.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.actionbar-in .t small{ color:var(--muted); font-weight:400; }
+
+/* Bank */
+.bank{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px; }
+.card{ border:2px solid var(--line); border-radius:var(--r-md); background:var(--card); padding:16px; display:flex; flex-direction:column; gap:8px; box-shadow:0 4px 0 var(--line); }
+.card h4{ margin:0; font-family:var(--f-display); font-size:1.08rem; line-height:1.2; }
+.card .sub{ color:var(--muted); font-size:.87rem; }
+.card .acts{ display:flex; gap:6px; flex-wrap:wrap; margin-top:auto; padding-top:6px; }
+.anch{ display:inline-block; border-radius:999px; padding:2px 10px; font-weight:700; font-size:.8rem; }
+.anch.in-t{ background:var(--g); color:var(--mark-ink); }
+.anch.out-t{ background:var(--o); color:var(--mark-ink); }
+
+/* Refs */
+.refs{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:14px; }
+.ref{ background:var(--soft); border-radius:var(--r-md); padding:14px; }
+.ref h4{ margin:0 0 6px; font-family:var(--f-display); font-size:1.04rem; }
+.ref p{ margin:0 0 6px; font-size:.94rem; }
+.ref a{ color:var(--violet); font-weight:700; }
+.ref ol{ margin:0; padding-left:1.3em; font-size:.92rem; }
+.ref .old{ color:var(--muted); font-size:.85rem; margin-top:8px; }
+table.t{ width:100%; border-collapse:collapse; font-size:.92rem; }
+table.t th,table.t td{ border-bottom:2px solid var(--line); padding:8px; text-align:left; vertical-align:top; }
+table.t th{ font-family:var(--f-display); }
+.tscroll{ overflow-x:auto; }
+.lvlmap{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+.lvlcol{ border-radius:var(--r-md); padding:10px; background:var(--soft); }
+.lvlcol h5{ margin:0 0 6px; font-family:var(--f-display); font-size:1rem; }
+.lvlcol span{ display:block; font-size:.83rem; padding:3px 7px; margin:4px 0; border-radius:8px; color:var(--mark-ink); }
+
+/* Modal, toast */
+.modal{ position:fixed; inset:0; background:rgba(35,26,79,.35); display:none; align-items:flex-end; justify-content:center; padding:14px; z-index:50; }
+.modal.on{ display:flex; }
+@media (min-width:761px){ .modal{ align-items:center; } }
+.modal .panel{ max-width:520px; width:100%; max-height:86vh; overflow:auto; }
+.menu{ display:grid; gap:8px; }
+.menu .btn{ justify-content:flex-start; }
+.toast{ position:fixed; left:50%; bottom:calc(var(--bnav) + env(safe-area-inset-bottom,0px) + 80px); transform:translateX(-50%) translateY(30px); opacity:0; pointer-events:none; background:var(--ink); color:var(--card); padding:12px 20px; border-radius:999px; font-weight:700; z-index:60; transition:all .25s; max-width:92vw; text-align:center; }
+.toast.on{ transform:translateX(-50%) translateY(0); opacity:1; }
+.foot{ margin-top:36px; text-align:center; color:var(--muted); font-size:.86rem; }
+.hide{ display:none !important; }
+@media (max-width:960px){ .mob-hide{ display:none !important; } }
+@media (min-width:961px){ .desk-hide{ display:none !important; } }
+
+#printArea{ display:none; }
+@media print{
+  body{ background:#fff; color:#000; }
+  body > *:not(#printArea){ display:none !important; }
+  #printArea{ display:block; font-family:Georgia, serif; font-size:11.5pt; line-height:1.45; }
+  #printArea h1{ font-size:18pt; margin:0 0 4pt; }
+  #printArea h2{ font-size:13pt; margin:14pt 0 4pt; border-bottom:1.5pt solid #000; }
+  #printArea table{ width:100%; border-collapse:collapse; }
+  #printArea td,#printArea th{ border:1px solid #444; padding:4pt 6pt; vertical-align:top; text-align:left; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1 class="logo">PRL Lab</h1>
+      <p class="tag">Du texte authentique à la tâche finale : repérer, construire, garder, partager.</p>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button">🌙 Sombre</button>
+  </header>
+
+  <nav class="nav" aria-label="Sections">
+    <div class="nav-in" role="tablist">
+      <button class="tab" role="tab" data-v="analyse" aria-selected="true"><span class="ico">🔍</span><span class="long">Analyser un texte</span><span class="short">Analyser</span></button>
+      <button class="tab" role="tab" data-v="build" aria-selected="false"><span class="ico">🧪</span><span class="long">Construire le PRL</span><span class="short">Construire</span></button>
+      <button class="tab" role="tab" data-v="bank" aria-selected="false"><span class="ico">🗂️</span><span class="long">Ma banque</span><span class="short">Banque</span><span class="n" id="bankN">0</span></button>
+      <button class="tab" role="tab" data-v="refs" aria-selected="false"><span class="ico">📚</span><span class="long">Repères</span><span class="short">Repères</span></button>
+    </div>
+  </nav>
+
+  <!-- ANALYSER -->
+  <section class="view on" id="v-analyse">
+    <div class="grid2">
+      <div>
+        <div class="panel hide" id="anSummary"></div>
+        <div id="anInput">
+          <div class="panel">
+            <div class="step"><b>1</b><h3>Votre classe</h3></div>
+            <label class="f">Classe</label>
+            <div class="seg" id="lvlSeg"></div>
+            <label class="f">Langue</label>
+            <div class="seg" id="profSeg"></div>
+            <div class="info" id="cecrlOut"></div>
+            <label class="f" for="anAxe">Axe du programme</label>
+            <div id="axeBox"></div>
+            <label class="f" for="taskSel">Tâche finale visée</label>
+            <select class="in" id="taskSel"></select>
+            <hr class="sep">
+            <div class="step"><b>2</b><h3>Le document</h3></div>
+            <label class="f" for="docTitle">Titre et source</label>
+            <input class="in" id="docTitle" placeholder="Ex. : article BBC Newsround, mars 2026">
+            <label class="f" for="txt">Texte, script ou transcription en anglais</label>
+            <textarea class="in big" id="txt" placeholder="Collez ici le texte ou le script…"></textarea>
+            <div class="btns">
+              <button class="btn main wide" id="btnScan" type="button">🖍️ Repérer les points de langue</button>
+              <button class="btn sm" id="btnSample" type="button">Essayer avec Oscar Wilde</button>
+              <button class="btn sm ghost" id="btnClear" type="button">Effacer le texte</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="results" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- CONSTRUIRE -->
+  <section class="view" id="v-build">
+    <div style="max-width:820px;margin:0 auto" id="buildBody"></div>
+  </section>
+
+  <!-- BANQUE -->
+  <section class="view" id="v-bank">
+    <div class="panel">
+      <h2>Ma banque de PRL</h2>
+      <p class="hint">Enregistrée dans ce navigateur. Exportez régulièrement le fichier .json pour la conserver ou la partager.</p>
+      <div class="row">
+        <input class="in" id="bankQ" placeholder="Chercher un titre, un point, un axe…" aria-label="Rechercher">
+        <select class="in" id="bankLvl" aria-label="Filtrer par classe"></select>
+      </div>
+      <div class="btns">
+        <button class="btn" id="bImp" type="button">Importer un fichier .json</button>
+        <button class="btn" id="bExpAll" type="button">Exporter toute la banque</button>
+      </div>
+      <input type="file" id="fileIn" accept=".json,application/json" class="hide">
+    </div>
+    <div style="margin-top:22px" id="bankList"></div>
+  </section>
+
+  <!-- REPÈRES -->
+  <section class="view" id="v-refs">
+    <div class="panel">
+      <h2>Les programmes en vigueur en 2026-2027</h2>
+      <p class="hint">Nouveaux programmes de langues vivantes étrangères publiés au BO n° 22 du 29 mai 2025, entrée en vigueur progressive.</p>
+      <div class="tscroll"><table class="t">
+        <tr><th>Classe</th><th>Programme applicable en 2026-2027</th><th>LVB</th><th>LVA</th><th>LVC</th></tr>
+        <tr><td>6e</td><td>BO 2025 (depuis la rentrée 2025)</td><td>A1</td><td>A1+</td><td>–</td></tr>
+        <tr><td>5e</td><td>BO 2025 (depuis la rentrée 2026)</td><td>A1+</td><td>A2</td><td>–</td></tr>
+        <tr><td>4e</td><td>Programme 2020 (BO 2025 à la rentrée 2027)</td><td>A1+</td><td>A2+</td><td>–</td></tr>
+        <tr><td>3e</td><td>Programme 2020 (BO 2025 à la rentrée 2028)</td><td>A2</td><td>B1</td><td>–</td></tr>
+        <tr><td>2nde</td><td>BO 2025 (depuis la rentrée 2025)</td><td>A2+</td><td>B1+</td><td>A1+</td></tr>
+        <tr><td>1re</td><td>BO 2025 (depuis la rentrée 2026)</td><td>B1</td><td>B1+</td><td>A2</td></tr>
+        <tr><td>Tle</td><td>BO 2025 (depuis la rentrée 2026)</td><td>B1</td><td>B2</td><td>A2+ / B1</td></tr>
+      </table></div>
+      <p class="hint" style="margin-top:10px">Niveaux visés en fin d'année : préambule commun des annexes 3 et 4 du BO n° 22 du 29 mai 2025. Le signe « + » indique que le niveau supérieur est atteint dans au moins une activité langagière.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Ce que disent les textes sur la langue</h2>
+      <div class="refs">
+        <div class="ref"><h4>La grammaire en situation</h4><p>Le programme demande un apprentissage de la grammaire en situation, dans les activités de compréhension et d'expression, et dans des temps de réflexion sur la langue, d'explicitation et de conceptualisation. Après une phase de découverte, le fait de langue est consolidé avec un apprentissage explicite des régularités.</p></div>
+        <div class="ref"><h4>Des repères à deux niveaux</h4><p>Chaque année propose des outils linguistiques à deux niveaux du CECRL, d'abord en reconnaissance, puis en répétition et en production, dans une démarche spiralaire. Les listes sont indicatives : l'outil s'en sert pour situer chaque point.</p></div>
+        <div class="ref"><h4>Axes culturels</h4><p>En 6e, les cinq axes sont à traiter. De la 5e à la terminale (voie générale), cinq axes sur six, dont obligatoirement l'axe 6. En voie technologique, au moins trois axes, l'axe 6 étant vivement recommandé. Deux axes peuvent être associés dans une même séquence.</p></div>
+        <div class="ref"><h4>Médiation et interaction</h4><p>Elles sont au cœur du cours : un PRL gagne à se terminer par un réemploi entre pairs (expliquer, reformuler, transmettre).</p></div>
+        <div class="ref"><h4>Évaluer pour faire progresser</h4><p>Évaluations formatives, critères co-construits, items d'évaluations antérieures réintroduits (approche spiralaire explicite), tests de positionnement non notés.</p></div>
+        <div class="ref"><h4>Le cahier et la trace écrite</h4><p>Le programme fait de la trace écrite et des bilans grammaticaux un point de référence fiable pour l'élève : chaque PRL en propose une, à co-construire.</p></div><div class="ref"><h4>Intelligence artificielle</h4><p>Le programme invite à mettre l'IA au service des objectifs d'apprentissage avec un regard critique. Le cadre d'usage national autorise son utilisation pédagogique par les élèves, encadrée, à partir de la 4e.</p></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Les démarches didactiques proposées</h2>
+      <div class="refs">
+        <div class="ref"><h4>Inductive</h4><p>Repérer, observer et classer un corpus, formuler des hypothèses, co-construire la règle et la trace écrite, s'entraîner en contexte, réemployer dans la tâche. Les élèves sont acteurs de la conceptualisation.</p></div>
+        <div class="ref"><h4>Focus on form en tâche</h4><p>D'après Long (1991) et l'apprentissage par les tâches : la forme est traitée quand un besoin apparaît dans une activité centrée sur le sens, puis la tâche est reprise et améliorée.</p></div>
+        <div class="ref"><h4>À partir des erreurs</h4><p>Les productions des élèves deviennent le corpus. Classer, comprendre, corriger, réécrire : l'erreur est un indicateur de l'interlangue, pas une faute.</p></div>
+        <div class="ref"><h4>Contrastive et plurilingue</h4><p>Comparer avec le français et les langues connues des élèves pour s'appuyer sur les ressemblances et rendre visibles les différences (répertoire plurilingue).</p></div>
+        <div class="ref"><h4>Explicite guidée</h4><p>Présentation brève et claire, vérification du concept par des questions ciblées, entraînement progressif : utile pour une forme coûteuse à découvrir seul.</p></div>
+        <div class="ref"><h4>Ce qui traverse toutes les démarches</h4><p>Le remarquer avant l'apprendre (noticing, Schmidt 1990) ; un corpus court et une difficulté à la fois (charge cognitive, Sweller ; Tricot) ; le retour régulier sur la forme (pratique espacée, progression spiralaire) ; l'ancrage dans le sens et la tâche (approche actionnelle, CECRL et volume complémentaire).</p></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Les axes par classe</h2>
+      <p class="hint">Axes et objets d'étude du BO n° 22 du 29 mai 2025. Ce sont ces listes que l'outil propose quand vous choisissez une classe et un axe. En 4e et 3e, les thèmes du programme 2020 restent en vigueur en 2026-2027 ; les axes du programme 2025 sont proposés en second pour anticiper.</p>
+      <div id="axesRef"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Carte des points de langue</h2>
+      <p class="hint">Niveau CECRL auquel chaque point apparaît en production dans les outils linguistiques du BO 2025. L'outil compare ce niveau au niveau visé par votre classe (LVA, LVB ou LVC) pour classer les points. Survolez un point pour voir où le programme le situe.</p>
+      <div id="lvlMap"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Sources officielles</h2>
+      <div class="refs">
+        <div class="ref"><h4>Programmes 2025</h4><p><a href="https://www.education.gouv.fr/bo/2025/Hebdo22/MENE2504621A" target="_blank" rel="noopener">BO n° 22 du 29 mai 2025</a></p></div>
+        <div class="ref"><h4>Ressources collège</h4><p><a href="https://eduscol.education.gouv.fr/4758/ressources-d-accompagnement-pour-les-langues-vivantes-etrangeres-et-regionales-aux-cycles-2-3-et-4" target="_blank" rel="noopener">Éduscol, ressources d'accompagnement cycles 2, 3 et 4</a></p><p><a href="https://eduscol.education.gouv.fr/sites/default/files/document/2026livretaccompagnementanglais6e5e4e3e-127310.pdf" target="_blank" rel="noopener">Livret d'accompagnement d'anglais 2026 (PDF)</a></p></div>
+        <div class="ref"><h4>Cycle 4</h4><p><a href="https://eduscol.education.gouv.fr/4362/j-enseigne-au-cycle-4" target="_blank" rel="noopener">Éduscol, enseigner au cycle 4</a></p></div>
+        <div class="ref"><h4>Lycée</h4><p><a href="https://eduscol.education.fr/document/65240/download" target="_blank" rel="noopener">Repères culturels, objets d'étude possibles (lycée, 2025)</a></p></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">PRL Lab · BROT2YOU · gratuit, sans compte, vos données restent dans votre navigateur.</p>
+</div>
+
+<div class="actionbar" id="actionbar"><div class="actionbar-in"><div class="t"><span id="abTitle">PRL</span><br><small id="totalBar">0 min</small></div><button class="btn sm main" id="bSave" type="button">Enregistrer</button><button class="btn sm" id="bExport" type="button">Exporter</button><button class="btn sm ghost" id="bMore" type="button" aria-label="Plus d'actions">•••</button></div></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="panel" id="modalBody"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div id="printArea"></div>
+
+<script type="application/json" id="kb">
+{"lexicon": {"PP": "been|gone|done|seen|taken|made|said|got|gotten|given|found|thought|told|become|left|felt|brought|begun|kept|held|written|stood|heard|met|run|sat|spoken|known|eaten|drunk|bought|caught|taught|won|lost|paid|sent|built|fallen|flown|driven|ridden|broken|chosen|forgotten|slept|woken|worn|thrown|grown|drawn|swum|sung|hidden|led|fought|sold|understood|put|cut|hit|let|set|read|shut|spent|lent|meant|shown|stolen|struck|torn|born|forgiven|frozen|hung|laid|risen|shaken|spread|sworn|sunk|stuck|sought|bitten|dug|fed|fled|begun|lit|beaten|blown|hurt|quit", "PRET": "went|saw|came|took|made|said|got|gave|found|thought|told|became|left|felt|brought|began|kept|held|wrote|stood|heard|met|ran|sat|spoke|knew|ate|drank|bought|caught|taught|won|lost|paid|sent|built|fell|flew|drove|rode|broke|chose|forgot|slept|woke|wore|threw|grew|drew|swam|sang|rang|hid|led|fought|sold|understood|did|was|were|had|meant|spent|lent|stole|struck|tore|shook|rose|froze|hung|laid|lay|sought|sank|stuck|swore|swept|bit|dug|fled|forgave|lit|beat|blew|hurt", "EDX": "need|feed|seed|speed|indeed|bleed|breed|proceed|exceed|succeed|hundred|sacred|naked|wicked|shed|bed|red|wed|fed|sled|bred|freed|weed|deed|greed|steed|tweed|creed|kindred|ragged|rugged|beloved|crooked|wretched|sled|led|bled|fled", "ADJX": "interested|excited|bored|tired|scared|worried|surprised|pleased|amazed|annoyed|disappointed|frightened|terrified|delighted|satisfied|embarrassed|confused|relaxed|ashamed|married|engaged|supposed|used|able|gone|been|glad|sorry"}, "cats": {"temps": {"label": "Temps et aspects", "color": "p"}, "modalite": {"label": "Modalité", "color": "g"}, "phrase": {"label": "Types de phrases et structures", "color": "b"}, "gn": {"label": "Groupe nominal et comparaison", "color": "y"}, "lien": {"label": "Mots de liaison et repères", "color": "o"}, "discours": {"label": "Discours et énonciation", "color": "l"}}, "tasks": [{"id": "raconter", "label": "Raconter (récit, anecdote, mythe)", "pts": ["preterit", "past_be_ing", "chrono", "past_perfect", "used_to", "direct_speech"]}, {"id": "decrire", "label": "Décrire (image, lieu, personne)", "pts": ["pres_be_ing", "there_is", "comparative", "intensifiers", "modal_proba"]}, {"id": "comparer", "label": "Comparer, classer", "pts": ["comparative", "superlative", "contrast", "intensifiers"]}, {"id": "argumenter", "label": "Argumenter, débattre", "pts": ["cause", "contrast", "modal_oblig", "cond1", "intensifiers"]}, {"id": "convaincre", "label": "Convaincre (pub, brochure, discours)", "pts": ["imperative", "superlative", "cond1", "will", "exclam"]}, {"id": "interviewer", "label": "Interviewer, enquêter", "pts": ["questions", "pres_perfect", "question_tags", "reported"]}, {"id": "conseiller", "label": "Conseiller, mettre en garde", "pts": ["modal_oblig", "cond2", "imperative", "infinitive_want", "modal_adv"]}, {"id": "imaginer", "label": "Imaginer, faire des hypothèses", "pts": ["cond2", "modal_proba", "wish", "will", "cond3"]}, {"id": "rapporter", "label": "Rapporter des propos, témoigner", "pts": ["reported", "preterit", "infinitive_want", "direct_speech"]}, {"id": "projeter", "label": "Se projeter, présenter un projet", "pts": ["going_to", "will", "cond1", "modal_ability"]}, {"id": "ressentir", "label": "Exprimer goûts et émotions", "pts": ["gerund", "exclam", "intensifiers", "cause", "wish"]}, {"id": "biographie", "label": "Présenter un parcours, une biographie", "pts": ["pres_perfect", "preterit", "time_markers", "used_to", "passive"]}, {"id": "informer", "label": "Informer, expliquer un phénomène", "pts": ["passive", "pres_simple", "cause", "quantifiers", "relative"]}], "points": [{"id": "pp_be_ing", "label": "Present perfect be+ing", "cat": "temps", "lvl": 6, "fn": "souligner une activité commencée dans le passé qui dure encore ou dont on voit les traces", "rx": ["\\b(?:have|has|'ve|haven't|hasn't)\\s+(?:not\\s+)?been\\s+[a-z]+ing\\b"], "rep": "Relevez les formes have/has + been + V-ing et soulignez le repère temporel qui les accompagne (for, since, all day…).", "obs": "Classez les énoncés : activité encore en cours / activité terminée dont on voit le résultat. Comparez avec un present perfect simple du document.", "concept": ["L'activité a-t-elle commencé avant le moment où l'on parle ?", "Est-elle terminée ? Qu'est-ce qui le montre ?", "Qu'apporte be+ing par rapport au present perfect simple (activité vs résultat) ?"], "trace": "have/has + been + V-ing : on met l'accent sur l'activité elle-même, qui a commencé dans le passé et se prolonge jusqu'à maintenant (ou dont on voit les traces). Avec for (durée) / since (point de départ).", "train": ["Commenter des images « traces » : She's been crying. They've been painting.", "Interview minute : How long have you been learning…? (réponses avec for / since)", "Transformer des phrases du document en changeant le repère (since → for)."], "err": ["*I am learning English since 2020 (calque du présent français)", "Confusion for / since", "Oubli de been : *I have learning"], "fr": "Le français utilise le présent (« j'apprends l'anglais depuis 5 ans ») là où l'anglais impose le present perfect : excellent point de comparaison.", "phono": "Formes faibles : have /əv/, been /bɪn/ ; contractions I've, she's been.", "rel": ["pres_perfect", "time_markers", "pres_be_ing"], "cecrl": "B2", "prog": "Tle B2 : valeurs de be+ing à tous les temps"}, {"id": "past_perfect", "label": "Past perfect", "cat": "temps", "lvl": 4, "fn": "situer un événement antérieur à un autre événement passé (retour en arrière dans le récit)", "rx": ["\\bhad\\s+(?:never\\s+|just\\s+|already\\s+|not\\s+|always\\s+|ever\\s+|recently\\s+)?(?:{PP}|(?!(?:{EDX})\\b)[a-z]{2,}ed)\\b", "\\b(?:I|you|he|she|we|they)'d\\s+(?:never\\s+|just\\s+|already\\s+)?(?:been|gone|done|seen|left|known|met|heard|told|forgotten|lost|found)\\b"], "rep": "Surlignez les formes had + participe passé. Pour chacune, repérez l'autre action passée à laquelle elle se rattache.", "obs": "Placez les événements du passage sur une frise : dans quel ordre se sont-ils produits ? Dans quel ordre sont-ils racontés ?", "concept": ["Quel événement a eu lieu en premier ?", "Pourquoi le narrateur ne raconte-t-il pas dans l'ordre chronologique ?", "Que se passerait-il si on remplaçait had + participe par le prétérit ?"], "trace": "had + participe passé (V-en) : on remonte encore plus loin dans le passé, avant un autre moment passé. Marqueurs fréquents : before, after, when, already, just, never.", "train": ["Frise à reconstituer puis phrases avec when / after / by the time.", "Réécrire un passage en ajoutant un flashback.", "Jeu d'enquête : Before the police arrived, the thief had…"], "err": ["Emploi systématique du past perfect pour « faire passé »", "Participe passé irrégulier erroné : *had went", "Confusion 'd = had / would"], "fr": "Proche du plus-que-parfait français (« il était parti »), mais l'anglais l'évite quand l'ordre est déjà clair (after + prétérit suffit souvent).", "phono": "had faible /əd/, contraction 'd ; pas d'accent sur l'auxiliaire sauf insistance.", "rel": ["preterit", "past_be_ing", "chrono", "cond3"], "cecrl": "B1", "prog": "3e B1 : past perfect ; 1re : maîtrise des temps du passé"}, {"id": "cond3", "label": "Hypothèse sur le passé : if + past perfect, would have", "cat": "modalite", "lvl": 5, "fn": "imaginer ce qui se serait passé autrement, exprimer un regret", "sp": "cond3", "layer": "u", "rep": "Repérez les phrases avec if. Soulignez les deux verbes de chaque phrase.", "obs": "Ce qui est décrit s'est-il produit ? Classez les phrases : réel / imaginé dans le passé.", "concept": ["La situation évoquée a-t-elle eu lieu ?", "Quelle forme verbale suit if ? Laquelle dans la principale ?", "Quel sentiment est exprimé (regret, reproche, soulagement) ?"], "trace": "If + had + V-en, would/could/might + have + V-en : hypothèse irréelle dans le passé (regret, reproche). If I had known, I would have come.", "train": ["Chaîne de conséquences : If he hadn't missed the bus, he wouldn't have…", "Réécrire la fin d'une histoire du document.", "Regrets d'un personnage (lien avec I wish + past perfect)."], "err": ["*If I would have known", "Oubli de have : *I would came", "Confusion avec le type 2"], "fr": "Correspond au plus-que-parfait + conditionnel passé (« si j'avais su, je serais venu ») : même logique, formes différentes.", "phono": "Formes faibles en chaîne : would've /wʊdəv/, I'd've ; rythme accentuel sur les verbes lexicaux.", "rel": ["cond2", "past_perfect", "wish"], "cecrl": "B1+", "prog": "2nde B1+ : hypothèse par inversion (Had she known…) ; Tle B2 : conditionnel passé"}, {"id": "cond2", "label": "Hypothèse irréelle : if + prétérit, would", "cat": "modalite", "lvl": 3, "fn": "imaginer une situation présente ou future peu probable, donner un conseil", "sp": "cond2", "layer": "u", "rep": "Relevez les phrases avec if et would (ou 'd). Soulignez le verbe qui suit if.", "obs": "Le verbe après if est au prétérit : la situation est-elle passée ? Classez : réel / imaginaire.", "concept": ["La situation est-elle réelle en ce moment ?", "Pourquoi le prétérit alors que l'on ne parle pas du passé ?", "Quelle différence avec If I win, I will… ?"], "trace": "If + prétérit, would + base verbale : hypothèse imaginaire (le prétérit marque la distance avec la réalité). If I were you, I would… pour conseiller.", "train": ["What would you do if… ? (cartes situations)", "Conseils : If I were you, I'd…", "Écrire le programme imaginaire d'un personnage du document."], "err": ["*If I would be rich", "*If I will have", "If I was / If I were : les deux existent, were plus soutenu"], "fr": "Comme en français (« si j'étais… je ferais… ») on n'emploie pas le conditionnel après si : point d'appui rassurant pour les élèves.", "phono": "'d /d/ souvent à peine audible : entraîner l'oreille (I'd go / I go).", "rel": ["cond1", "cond3", "wish", "modal_proba"], "cecrl": "A2+", "prog": "4e A2+ : would + BV, If I were…, I would… ; consolidé en 3e"}, {"id": "cond1", "label": "Hypothèse réelle : if + présent, will / impératif", "cat": "modalite", "lvl": 2, "fn": "poser une condition réaliste et sa conséquence, convaincre, avertir", "sp": "cond1", "layer": "u", "rep": "Repérez les phrases avec if (ou unless). Encadrez les deux parties de la phrase.", "obs": "Comparez le temps après if et dans la principale. La situation est-elle possible ?", "concept": ["Quel temps après if ? Pourquoi pas will ?", "La condition peut-elle se réaliser ?", "Que change unless par rapport à if ?"], "trace": "If + présent simple, will / can / impératif : condition réalisable et sa conséquence. Pas de will après if. Unless = if… not.", "train": ["Slogans et mises en garde : If you…, you will…", "Chaîne de conséquences en binôme.", "Règlement de classe ou charte à écrire."], "err": ["*If it will rain", "Oubli de la virgule quand if est en tête (à l'écrit)", "Confusion unless / if"], "fr": "Comme « si + présent, futur » en français : transfert positif.", "phono": "Intonation montante sur la subordonnée, descendante sur la principale.", "rel": ["cond2", "will", "imperative"], "cecrl": "A2", "prog": "5e A2 : hypothèses (If you gaze…, you'll notice) ; 4e A2+ : subordonnées conditionnelles"}, {"id": "wish", "label": "I wish / If only", "cat": "modalite", "lvl": 4, "fn": "exprimer un souhait irréalisable, un regret", "rx": ["\\b(?:I|you|he|she|we|they|people)\\s+(?:really\\s+|only\\s+|just\\s+)?wish(?:es|ed)?\\b", "\\bif only\\b"], "rep": "Relevez wish / if only et le verbe qui suit.", "obs": "Le verbe qui suit est-il au présent ? Classez : regret sur le présent / sur le passé.", "concept": ["La situation souhaitée est-elle réelle ?", "Pourquoi un temps du passé après wish ?", "Quel lien avec if + prétérit ?"], "trace": "I wish / If only + prétérit : regret sur le présent. + past perfect : regret sur le passé. + would : souhait qu'autrui change.", "train": ["Bulles de pensées des personnages du document.", "Lettre de regrets d'un personnage.", "Jeu « genie in a bottle »."], "err": ["*I wish I will", "Confusion wish / hope", "*I wish I can"], "fr": "« Si seulement… » + imparfait / plus-que-parfait : parallèle très parlant.", "phono": "Accent de phrase sur le mot qui porte le regret.", "rel": ["cond2", "cond3"], "cecrl": "B1", "prog": "3e B1 : prétérit après wish ; 2nde B1+ : past perfect après wish ; Tle B2 : if only, should have"}, {"id": "used_to", "label": "used to / would (habitude passée)", "cat": "temps", "lvl": 5, "fn": "évoquer une habitude ou un état passé révolu, comparer hier et aujourd'hui", "rx": ["\\bused\\s+to\\s+[a-z]+\\b", "\\b(?:didn't|did not)\\s+use\\s+to\\b"], "rep": "Surlignez used to + verbe. Relevez ce qui a changé depuis.", "obs": "Classez : ce qui était vrai avant / ce qui est vrai aujourd'hui.", "concept": ["L'action se produit-elle encore ?", "Quelle forme suit used to ?", "Comment dire le contraire ? Poser la question ?"], "trace": "used to + base verbale : habitude ou état passé, aujourd'hui révolu. Négation didn't use to, question Did you use to… ? Ne pas confondre avec be used to + V-ing (être habitué à).", "train": ["Then and now : comparer deux photos d'époque.", "Interviewer un grand-parent (questions préparées).", "Rédiger la légende d'une photo d'archive."], "err": ["*I use to play (présent)", "Confusion avec be used to + V-ing", "*didn't used to (forme critiquée à l'écrit)"], "fr": "Proche de l'imparfait d'habitude (« je jouais ») : mais l'imparfait correspond aussi à be+ing passé, d'où les confusions.", "phono": "used to /ˈjuːstə/ : le d ne s'entend pas, s sourd (≠ used /juːzd/).", "rel": ["preterit", "time_markers", "past_be_ing"], "cecrl": "B1+", "prog": "2nde B1+ : habitude dans le passé ; Tle B2 : used to ≠ be used to, would"}, {"id": "pres_perfect", "label": "Present perfect", "cat": "temps", "lvl": 3, "fn": "faire un bilan, parler d'expériences, relier le passé au présent", "rx": ["\\b(?:have|has|'ve|haven't|hasn't|have\\s+not|has\\s+not)\\s+(?:never\\s+|ever\\s+|just\\s+|already\\s+|always\\s+|recently\\s+|not\\s+|finally\\s+|often\\s+)?(?:{PP}|(?!(?:{EDX})\\b)[a-z]{2,}ed)\\b"], "rep": "Relevez have/has + participe passé. Repérez les mots qui les accompagnent (ever, never, just, already, yet, for, since).", "obs": "Comparez avec les verbes au prétérit du document : lesquels sont datés ? Lesquels sont reliés au moment présent ?", "concept": ["Sait-on quand l'action a eu lieu ? Est-ce important ?", "Qu'est-ce qui intéresse l'énonciateur : la date ou le résultat aujourd'hui ?", "Pourquoi ne peut-on pas dire *I have seen him yesterday ?"], "trace": "have/has + participe passé : on fait le bilan au moment présent (expérience, résultat, durée jusqu'à maintenant). Pas de date précise. Le prétérit, lui, coupe l'action du présent (yesterday, in 2010, ago).", "train": ["Find someone who… has ever…", "Bucket list : I have already… / I have never…", "Trier des phrases prétérit / present perfect selon le repère temporel."], "err": ["*I have seen him yesterday", "*Since three years", "Participe passé irrégulier erroné"], "fr": "Ressemble au passé composé par la forme, pas par le sens : « je l'ai vu hier » se traduit par le prétérit. Le contraste est à travailler explicitement.", "phono": "Formes faibles et contractions : I've, she's, haven't ; terminaisons -ed /t/ /d/ /ɪd/.", "rel": ["preterit", "pp_be_ing", "time_markers"], "cecrl": "A2+", "prog": "4e A2+ : le passé en lien avec le présent ; 3e B1 : choisir entre les temps"}, {"id": "passive", "label": "Voix passive", "cat": "phrase", "lvl": 4, "fn": "mettre en avant ce qui subit l'action, informer de façon objective", "rx": ["\\b(?:am|is|are|was|were|be|been|being|isn't|aren't|wasn't|weren't)\\s+(?:not\\s+|often\\s+|still\\s+|always\\s+|never\\s+|also\\s+|very\\s+much\\s+|much\\s+|widely\\s+|largely\\s+|usually\\s+|sometimes\\s+|already\\s+|first\\s+)?(?!(?:{ADJX})\\b)(?:{PP}|(?!(?:{EDX})\\b)[a-z]{2,}ed)\\b(?:\\s+by\\b)?"], "rep": "Relevez be + participe passé. Pour chaque énoncé, qui fait l'action ? Est-ce dit ?", "obs": "Transformez deux phrases à la voix active : qu'est-ce qui change (sujet, ordre, information mise en avant) ?", "concept": ["Quel élément est le sujet grammatical ? Fait-il l'action ?", "Pourquoi l'auteur ne dit-il pas toujours qui fait l'action ?", "Qu'est-ce qui indique le temps : be ou le participe ?"], "trace": "be (conjugué) + participe passé (V-en) : le sujet subit l'action. L'agent (by…) est souvent omis car inconnu, évident ou sans importance. Le temps se lit sur be.", "train": ["Fiche d'identité d'un monument : It was built in… by…", "Quiz culturel : Who was… written by?", "Réécrire une brève d'actualité au passif."], "err": ["Oubli de be : *The bridge built in 1890", "Mauvais participe irrégulier", "*It was wrote"], "fr": "Le français emploie souvent « on » là où l'anglais met le passif (« on l'a construit » → it was built).", "phono": "be inaccentué ; accent sur le participe : It was BUILT in 1890.", "rel": ["pres_simple", "preterit", "pres_perfect", "causative"], "cecrl": "B1", "prog": "3e B1 : voix passive ; Tle B2 : avec modaux, phrasal verbs, compléments complexes"}, {"id": "past_be_ing", "label": "Prétérit be+ing", "cat": "temps", "lvl": 3, "fn": "décrire le décor d'un récit, une action en cours interrompue", "rx": ["\\b(?:was|were|wasn't|weren't)\\s+(?:not\\s+|still\\s+|just\\s+|always\\s+)?[a-z]{2,}ing\\b"], "rep": "Surlignez was/were + V-ing et les verbes au prétérit simple du même passage.", "obs": "Classez : actions en cours (décor) / actions ponctuelles (événements). Représentez-les sur une frise (ligne / point).", "concept": ["Quelle action dure ? Laquelle vient l'interrompre ?", "Que fait be+ing pour le lecteur (il le plonge dans la scène) ?", "Quel mot relie souvent les deux (when, while) ?"], "trace": "was/were + V-ing : action en déroulement à un moment du passé (décor, arrière-plan). Le prétérit simple fait avancer le récit. while + be+ing / when + prétérit.", "train": ["Alibi : What were you doing at 8 pm last night?", "Décrire une image d'archive comme une scène de film.", "Récit à partir d'images séquentielles avec when / while."], "err": ["*I was go", "Emploi avec des verbes d'état (*I was knowing)", "Accord was/were"], "fr": "Couvre une partie des emplois de l'imparfait (« il pleuvait »). L'imparfait d'habitude correspond plutôt à used to.", "phono": "was /wəz/ faible, were /wə/ ; terminaison -ing /ɪŋ/ sans /g/ final prononcé.", "rel": ["preterit", "chrono", "used_to"], "cecrl": "A2+", "prog": "4e A2+ : prétérit simple et en be+ing ; 3e B1 : choisir entre les temps"}, {"id": "going_to", "label": "be going to (futur)", "cat": "temps", "lvl": 2, "fn": "exprimer une intention, une prédiction fondée sur des indices présents", "rx": ["(?:\\bam|\\bis|\\bare|'m|'re|'s|\\bwas|\\bwere|\\bisn't|\\baren't)\\s+(?:not\\s+)?going\\s+to\\s+[a-z]+\\b"], "rep": "Relevez be going to + verbe. Qu'est-ce qui, dans la situation, annonce l'action ?", "obs": "Comparez avec will : intention déjà prise / décision sur le moment ; indice visible / opinion.", "concept": ["La décision est-elle prise avant le moment où l'on parle ?", "Voit-on des signes de ce qui va arriver ?", "Quelle partie de la forme se conjugue ?"], "trace": "be going to + base verbale : intention déjà décidée, ou prédiction appuyée sur un indice présent (Look at the clouds! It's going to rain).", "train": ["Résolutions de rentrée / de nouvel an.", "Prédire à partir d'images : What's going to happen?", "Planifier un voyage pour la tâche finale."], "err": ["Oubli de be : *I going to", "*I'm going to went", "Confusion avec aller (déplacement)"], "fr": "Correspond au futur proche « aller + infinitif » : transfert positif fort.", "phono": "Forme orale gonna à reconnaître ; to /tə/ faible.", "rel": ["will", "pres_be_ing", "cond1"], "cecrl": "A2", "prog": "5e A2 : futur avec will et be going to + BV"}, {"id": "pres_be_ing", "label": "Présent be+ing", "cat": "temps", "lvl": 1, "fn": "décrire ce qui se passe en ce moment, décrire une image, un projet proche", "rx": ["(?:\\bam|\\bis|\\bare|'m|'re|\\bisn't|\\baren't)\\s+(?:not\\s+|still\\s+|always\\s+|now\\s+)?(?!going\\s+to\\b)[a-z]{2,}ing\\b"], "rep": "Surlignez be + V-ing. Repérez les mots qui indiquent le moment (now, at the moment, look!).", "obs": "Comparez avec les verbes au présent simple du document : habitude / action en cours ; fait général / description d'une scène.", "concept": ["L'action est-elle en cours au moment où l'on parle ?", "Est-ce une habitude ou une scène particulière ?", "Quels éléments composent la forme ?"], "trace": "be (am/is/are) + V-ing : action en cours, en déroulement, ou description d'une scène. Le présent simple sert aux habitudes, goûts, vérités générales.", "train": ["Décrire une image en binôme (A décrit, B dessine / retrouve).", "Mime : What am I doing?", "Commenter une scène de film en direct."], "err": ["Oubli de be : *He playing", "*I am agree / emploi avec verbes d'état", "Doublement de consonne (running, swimming)"], "fr": "Le français n'a pas d'équivalent grammatical : « être en train de » n'est pas toujours naturel. Point de vigilance.", "phono": "am, is, are faibles et contractés ; -ing /ɪŋ/.", "rel": ["pres_simple", "going_to", "past_be_ing"], "cecrl": "A1+", "prog": "6e A1+ : reconnaître be+ing, y compris pour un futur proche ; repris en 5e et 4e"}, {"id": "will", "label": "will (futur, prédiction, décision)", "cat": "temps", "lvl": 2, "fn": "prédire, promettre, prendre une décision sur le moment", "rx": ["\\b(?:will|won't|shall)\\s+(?:not\\s+|never\\s+|probably\\s+|definitely\\s+|always\\s+|soon\\s+)?[a-z]+\\b", "\\b(?:I|you|he|she|it|we|they|there)'ll\\s+[a-z]+\\b"], "rep": "Relevez will / 'll / won't + verbe et classez-les : prédiction, promesse, décision, offre.", "obs": "Comparez avec be going to si le document en contient. Qui s'engage ? Sur quoi se fonde la prédiction ?", "concept": ["L'énonciateur est-il sûr de lui ?", "La décision vient-elle d'être prise ?", "Pourquoi will n'est-il pas un « temps » comme les autres ?"], "trace": "will + base verbale : l'énonciateur se projette (prédiction, promesse, décision immédiate, volonté). Négation won't. Nuances : probably, definitely, I think…", "train": ["Horoscope ou prédictions pour la classe en 2050.", "Promesses de campagne d'un délégué.", "Jeu de rôle au restaurant : I'll have…"], "err": ["*I will to go", "*He wills", "will après if ou when"], "fr": "Proche du futur simple, mais will est un auxiliaire modal : pas de -s, base verbale après.", "phono": "'ll /l/ sombre ; won't /wəʊnt/ ≠ want /wɒnt/ : paire minimale à travailler.", "rel": ["going_to", "cond1", "modal_proba"], "cecrl": "A2", "prog": "5e A2 : futur avec will et be going to (6e : quelques formes lexicalisées)"}, {"id": "modal_adv", "label": "had better, would rather, be supposed to", "cat": "modalite", "lvl": 5, "fn": "conseiller fermement, exprimer une préférence, une attente sociale", "rx": ["\\b(?:had better|'d better|would rather|'d rather|would sooner)\\b", "\\b(?:am|is|are|was|were|'m|'re|'s)\\s+(?:not\\s+)?(?:supposed|meant|bound|likely|unlikely|about)\\s+to\\b"], "rep": "Relevez ces tournures et dites quelle attitude de l'énonciateur elles traduisent.", "obs": "Classez : conseil / préférence / ce qui est attendu / ce qui va arriver.", "concept": ["Qui donne un avis ? Avec quelle force ?", "Quelle forme verbale suit ?", "Que se passe-t-il si on ne suit pas le conseil ?"], "trace": "had better + base (conseil appuyé), would rather + base (préférence), be supposed to (attente, règle), be about to (imminence), be likely to (probabilité).", "train": ["Guide de survie pour un correspondant.", "Dilemmes : Would you rather… ?", "Règles implicites d'une école anglophone."], "err": ["*You had better to go", "*I would rather to stay", "Confusion 'd = had / would"], "fr": "« Tu ferais mieux de », « je préfèrerais », « être censé » : équivalents utiles pour la médiation.", "phono": "'d better /dˈbetə/ très réduit à l'oral.", "rel": ["modal_oblig", "modal_proba"], "cecrl": "B1+", "prog": "3e B1 : be allowed to ; 2nde B1+ : formes périphrastiques, had better dans les exemples"}, {"id": "modal_proba", "label": "Modaux de probabilité (may, might, must, can't)", "cat": "modalite", "lvl": 3, "fn": "émettre des hypothèses, évaluer le degré de certitude", "rx": ["\\b(?:may|might|mightn't)\\s+(?:not\\s+)?[a-z]+\\b", "\\b(?:must|can't|cannot|could|couldn't)\\s+(?:have\\s+)?be(?:en)?\\b"], "rep": "Relevez may, might, must be, can't be, could be. L'énonciateur est-il certain ?", "obs": "Placez les énoncés sur une échelle de certitude de 0 à 100 %.", "concept": ["Est-ce une obligation ou une déduction ?", "Comment le contexte permet-il de trancher pour must ?", "Comment parler d'une hypothèse sur le passé (must have been) ?"], "trace": "may / might / could : possible ; must : quasi certain (déduction) ; can't : impossible. + have + V-en pour une hypothèse sur le passé.", "train": ["Objets mystères : It might be… It can't be…", "Enquête : The thief must have…", "Hypothèses sur une image en anticipation."], "err": ["*It must to be", "Confusion must obligation / déduction", "*It can be not"], "fr": "« Il doit être malade » : le français a la même double valeur pour devoir, point d'appui intéressant.", "phono": "must /məst/ faible, can't /kɑːnt/ (GB) ≠ can /kən/ : écoute discriminante.", "rel": ["modal_ability", "modal_oblig", "cond2"], "cecrl": "A2+", "prog": "4e A2+ : probabilité avec can, may, must ; 3e B1 : might ; Tle B2 : modal + have + V-en"}, {"id": "modal_oblig", "label": "Obligation, interdiction, conseil (must, have to, should)", "cat": "modalite", "lvl": 1, "fn": "énoncer des règles, conseiller, interdire, exprimer l'absence d'obligation", "rx": ["\\b(?:must|mustn't|should|shouldn't|ought\\s+to)\\s+(?:not\\s+)?(?!be\\b|have\\s+been\\b)[a-z]+\\b", "\\b(?:have|has|had|don't\\s+have|doesn't\\s+have|didn't\\s+have)\\s+to\\s+[a-z]+\\b", "\\bneeds?\\s+to\\s+[a-z]+\\b"], "rep": "Relevez must, have to, should, mustn't, don't have to. Qui impose la règle ?", "obs": "Classez : obligation venant de l'énonciateur / obligation extérieure / conseil / interdiction / absence d'obligation.", "concept": ["Qui est à l'origine de l'obligation ?", "Quelle différence entre mustn't et don't have to ?", "Comment exprimer une obligation passée ?"], "trace": "must : obligation posée par l'énonciateur ; have to : contrainte extérieure ; should : conseil ; mustn't : interdiction ; don't have to : absence d'obligation. Au passé : had to.", "train": ["Règlement d'un lieu (musée, parc national).", "Conseils à un nouvel élève.", "Comparer les règles d'une école française et d'une école anglophone."], "err": ["*You must to go", "*You don't must", "mustn't / don't have to inversés"], "fr": "« Il faut », « devoir », « tu devrais » : le français ne distingue pas must / have to.", "phono": "mustn't /ˈmʌsnt/ : le premier t ne se prononce pas ; have to /hæftə/.", "rel": ["modal_ability", "modal_adv", "imperative"], "cecrl": "A1+", "prog": "6e A1+ : must/mustn't ; 5e A2 : should ; 3e B1 : ought to ; 2nde B1+ : have to, shall"}, {"id": "modal_ability", "label": "Capacité, permission (can, could, be able to)", "cat": "modalite", "lvl": 0, "fn": "dire ce qu'on sait faire, demander la permission, proposer", "rx": ["\\b(?:can|can't|cannot|could|couldn't)\\s+(?:not\\s+|also\\s+|still\\s+)?[a-z]+\\b", "\\b(?:be|am|is|are|was|were|been|'m|'re)\\s+(?:not\\s+)?able\\s+to\\b"], "rep": "Relevez can / can't / could / be able to. Que permettent-ils de dire ?", "obs": "Classez : capacité / permission / demande polie / possibilité.", "concept": ["Quelle forme suit can ?", "Pourquoi could est-il plus poli ?", "Comment dire « je pourrai » (futur) ?"], "trace": "can + base verbale : capacité, permission, possibilité. could : capacité passée ou demande polie. be able to : quand can ne suffit pas (futur, present perfect).", "train": ["Talent show : I can… / I can't…", "Demandes polies en jeu de rôle (Could I… ?).", "Super-héros : capacités des personnages."], "err": ["*He cans", "*I can to swim", "*I will can"], "fr": "« Pouvoir » et « savoir » se traduisent tous deux par can.", "phono": "can /kən/ faible en affirmatif, can't accentué : sens porté par la prononciation.", "rel": ["modal_oblig", "modal_proba"], "cecrl": "A1", "prog": "6e A1 : can/can't ; 5e A2 : could ; 3e B1 : be able to"}, {"id": "question_tags", "label": "Question tags", "cat": "discours", "lvl": 5, "fn": "demander confirmation, maintenir l'interaction", "rx": [",\\s*(?:isn't|aren't|wasn't|weren't|don't|doesn't|didn't|won't|can't|couldn't|haven't|hasn't|hadn't|shouldn't|wouldn't|is|are|was|were|do|does|did|will|can|have|has|would|should)\\s+(?:he|she|it|they|you|we|I|there)\\s*\\?"], "rep": "Relevez les petites questions en fin de phrase. Quel auxiliaire reprennent-elles ?", "obs": "Comparez phrase affirmative / tag négatif et l'inverse. Écoutez l'intonation si le document est sonore.", "concept": ["L'énonciateur pose-t-il une vraie question ?", "Comment choisit-on l'auxiliaire du tag ?", "Que change l'intonation (montante / descendante) ?"], "trace": "Phrase affirmative → tag négatif ; phrase négative → tag affirmatif, avec l'auxiliaire de la phrase (ou do/does/did). Intonation descendante : on attend un accord ; montante : vraie question.", "train": ["Ping-pong de tags en binôme.", "Small talk : It's cold today, isn't it?", "Réécrire un dialogue plus naturel."], "err": ["*isn't it systématique (calque de « n'est-ce pas »)", "Mauvais auxiliaire", "Mauvais pronom"], "fr": "« N'est-ce pas ? » est invariable ; l'anglais reprend l'auxiliaire et le sujet.", "phono": "Intonation : le cœur du sens. Travail d'écoute indispensable.", "rel": ["questions", "pres_simple"], "cecrl": "B1+", "prog": "2nde B1+ : réponses courtes et tags"}, {"id": "questions", "label": "Questions (Wh- et yes/no)", "cat": "phrase", "lvl": 0, "layer": "u", "fn": "interroger, mener une interview, vérifier une information", "rx": [{"p": "(?:^|[.!?\\n]\\s*|[\"“‘']\\s*)(?:What|Where|When|Why|Who|Whom|Which|How|Whose)\\b[^.!?\\n]*\\?", "f": "gm"}, {"p": "(?:^|[.!?\\n]\\s*|[\"“‘']\\s*)(?:Do|Does|Did|Is|Are|Was|Were|Have|Has|Had|Can|Could|Will|Would|Should|Shall|May|Must|Am)\\b[^.!?\\n]*\\?", "f": "gm"}], "rep": "Relevez toutes les questions du document. Entourez le mot interrogatif et l'auxiliaire.", "obs": "Classez : questions fermées / ouvertes. Observez l'ordre des mots : quoi vient avant le sujet ?", "concept": ["Quel mot vient juste après le mot interrogatif ?", "Quand a-t-on besoin de do / does / did ?", "Pourquoi Who wrote it? n'a-t-il pas de did ?"], "trace": "(Mot interrogatif) + auxiliaire + sujet + verbe ? Sans autre auxiliaire : do / does / did. Question sur le sujet : pas d'auxiliaire (Who wrote it?).", "train": ["Interview d'un personnage du document.", "Jeu « 20 questions ».", "Retrouver la question à partir de la réponse."], "err": ["*Where you live?", "*What did he said?", "*Who did write it?"], "fr": "L'inversion existe en français mais l'oral courant s'en passe (« tu habites où ? »), d'où l'oubli de l'auxiliaire.", "phono": "Intonation descendante pour les Wh-, montante pour les yes/no.", "rel": ["question_tags", "reported", "pres_simple"], "cecrl": "A1", "prog": "6e A1 : mots interrogatifs ; 5e A2 : large gamme de questions ; 3e B1 : How often, how much, how long"}, {"id": "reported", "label": "Discours rapporté", "cat": "discours", "lvl": 2, "fn": "rapporter les propos de quelqu'un, témoigner, faire une médiation", "rx": ["\\b(?:said|says|told|tells|asked|asks|explained|explains|replied|answered|claimed|admitted|promised|warned|added|announced|declared|remarked|muttered|whispered|shouted)\\b(?:\\s+[a-z]+){0,2}\\s+(?:that|if|whether|to|why|how|what|where|when)\\b", "\\b(?:said|told|asked)\\s+(?:me|him|her|them|us)\\b"], "rep": "Relevez les verbes introducteurs (say, tell, ask…) et ce qui les suit.", "obs": "Comparez avec le discours direct du document : qu'est-ce qui change (pronoms, temps, repères de temps et de lieu) ?", "concept": ["Qui parle ? À qui ? Quand ?", "Pourquoi les pronoms changent-ils ?", "Quelle différence entre say et tell ?"], "trace": "say (that) / tell somebody (that) / ask (if, wh-). Les pronoms et repères s'adaptent à la nouvelle situation ; le temps recule si le propos n'est plus vrai ou si le verbe introducteur est au passé.", "train": ["Médiation : rapporter à un camarade ce qu'a dit un témoin.", "Téléphone arabe écrit.", "Compte rendu d'interview."], "err": ["*He said me", "*She asked where was he", "Concordance des temps appliquée mécaniquement"], "fr": "Même mécanique qu'en français (« il a dit qu'il viendrait »), mais say / tell n'ont pas d'équivalent distinct.", "phono": "that inaccentué /ðət/.", "rel": ["direct_speech", "questions", "infinitive_want"], "cecrl": "A2", "prog": "5e A2 : discours direct → indirect ; 3e B1 : say, tell, ask, questions indirectes"}, {"id": "infinitive_want", "label": "want / ask / tell somebody to do", "cat": "phrase", "lvl": 4, "fn": "exprimer une volonté, un ordre, une demande envers autrui", "rx": ["\\b(?:want|wants|wanted|would\\s+like|'d\\s+like|asked|ask|asks|told|tell|tells|expect|expects|expected|allow|allows|allowed|encourage|encourages|encouraged|forced|force|forces|invite|invited|urge|urged)\\s+(?!to\\b)(?:me|you|him|her|it|us|them|[a-z]+)\\s+to\\s+[a-z]+\\b"], "rep": "Relevez verbe + personne + to + verbe. Qui veut quoi, de qui ?", "obs": "Comparez avec la traduction française : quelle structure le français emploie-t-il ?", "concept": ["Qui fait l'action exprimée par le second verbe ?", "Pourquoi pas *I want that you… ?", "Quelle forme prend le pronom ?"], "trace": "want / would like / ask / tell / expect + complément (me, him, them…) + to + base verbale. Jamais *want that.", "train": ["Exigences d'un personnage : He wants them to…", "Médiation : transmettre des consignes.", "Lettre de réclamation : We would like you to…"], "err": ["*I want that you come (calque)", "*He wants I go", "Oubli de to"], "fr": "« Je veux que tu viennes » : le subjonctif français pousse au calque *want that.", "phono": "to faible /tə/.", "rel": ["reported", "modal_oblig", "causative"], "cecrl": "B1", "prog": "3e B1 : want / expect / would like sb to + BV"}, {"id": "causative", "label": "make / let / have / get + complément + verbe", "cat": "phrase", "lvl": 5, "fn": "exprimer la contrainte, la permission, le fait de faire faire", "rx": ["\\b(?:make|makes|made|making|let|lets|letting|have|has|had|get|gets|got)\\s+(?:me|you|him|her|it|us|them|people|someone|everyone|the\\s+[a-z]+)\\s+(?!to\\b|and\\b|or\\b|in\\b|on\\b|at\\b|back\\b|up\\b|down\\b|out\\b|off\\b)[a-z]+(?:ed|en)?\\b"], "rep": "Relevez make / let / have / get + personne/objet + verbe. Qui agit vraiment ?", "obs": "Classez : contrainte / permission / faire faire par un professionnel.", "concept": ["Qui décide ? Qui exécute ?", "Pourquoi to n'apparaît-il pas après make et let ?", "Quand utilise-t-on le participe passé (have it repaired) ?"], "trace": "make + qqn + base : forcer ; let + qqn + base : laisser ; have + qqch + V-en : faire faire ; get + qqn + to + base : convaincre.", "train": ["Ce que mes parents me font faire / me laissent faire.", "Services : I had my hair cut.", "Analyse d'un document sur le travail des enfants."], "err": ["*make him to work", "*let me to go", "Confusion have / get"], "fr": "« Faire faire » et « laisser faire » : structure proche, sans to.", "phono": "Accent sur le verbe lexical.", "rel": ["infinitive_want", "passive"], "cecrl": "B1+", "prog": "2nde B1+ : structures causatives et résultatives ; Tle B2 : have, get, make"}, {"id": "gerund", "label": "V-ing après certains verbes et prépositions", "cat": "phrase", "lvl": 1, "fn": "exprimer ses goûts, parler d'activités, enchaîner les idées", "rx": ["\\b(?:like|likes|liked|love|loves|loved|hate|hates|hated|enjoy|enjoys|enjoyed|prefer|prefers|stop|stops|stopped|start|starts|started|keep|keeps|kept|mind|minds|avoid|avoids|avoided|finish|finished|can't\\s+stand|feel\\s+like|look\\s+forward\\s+to|dream\\s+of|dreams\\s+of|dreamt\\s+of|dreamed\\s+of|give\\s+up|gave\\s+up)\\s+[a-z]{2,}ing\\b", "\\b(?:of|for|about|without|before|after|by|at|in|instead\\s+of)\\s+(?!(?:thing|something|anything|nothing|everything|morning|evening|spring|string|king|ring|wing|sing|bring|ceiling|building|wedding|clothing|meeting|painting|beginning|ending|feeling|during|swing|sibling|darling|pudding|stocking|shilling|sterling|lightning|duckling|earring|offspring)\\b)[a-z]{3,}ing\\b"], "rep": "Relevez les V-ing qui ne sont pas précédés de be. Quel mot les précède ?", "obs": "Classez : après un verbe de goût / après un verbe de début-fin / après une préposition.", "concept": ["Le V-ing est-il ici une action en cours ?", "Quel rôle joue-t-il dans la phrase (nom, complément) ?", "Pourquoi *before to go est-il impossible ?"], "trace": "Après les verbes de goût (like, love, enjoy, hate), de début/fin (start, stop, finish), et après toute préposition : V-ing. Le V-ing fonctionne alors comme un nom.", "train": ["Profil de goûts pour un correspondant.", "Interview : What do you enjoy doing?", "Écrire des conseils : Before travelling, …"], "err": ["*I enjoy to swim", "*before to leave", "Confusion avec be+ing"], "fr": "Le français met l'infinitif (« avant de partir », « j'aime nager »).", "phono": "-ing /ɪŋ/ : pas de /g/ dur.", "rel": ["infinitive_want", "pres_be_ing"], "cecrl": "A1+", "prog": "6e A1+ : No cheating!, I'm fond of listening ; 2nde B1+ : gérondif sujet et objet"}, {"id": "relative", "label": "Propositions relatives (who, which, whose)", "cat": "gn", "lvl": 3, "noQ": true, "fn": "définir, préciser, enrichir une description", "rx": ["\\b[a-z]+,?\\s+(?:who|whom|whose|which)\\s+[a-z]+"], "rep": "Relevez who / which / whose / that et le nom qu'ils complètent.", "obs": "Classez : relatif renvoyant à une personne / à une chose ; information indispensable / ajoutée entre virgules.", "concept": ["Quel nom le relatif reprend-il ?", "Peut-on supprimer la relative sans perdre le sens ?", "Quand peut-on omettre le relatif ?"], "trace": "who (personnes), which (choses), that (les deux, relative déterminative), whose (possession). Entre virgules : information ajoutée, pas de that. Relatif complément : souvent omis (the book I read).", "train": ["Devinettes : It's a person who… / a thing which…", "Enrichir des phrases du document.", "Fiches de personnages pour un whodunnit."], "err": ["*The man which", "*The girl who her father…", "Que/qui → who/which confondus avec l'interrogatif"], "fr": "« Qui / que » se répartissent selon la fonction ; who / which selon l'antécédent (personne / chose).", "phono": "that relatif faible /ðət/.", "rel": ["genitive", "questions"], "cecrl": "A2+", "prog": "4e A2+ : relatives en who et which ; 3e B1 : who, that ; 2nde B1+ : whose, who/whom"}, {"id": "comparative", "label": "Comparatifs (-er than, more… than, as… as)", "cat": "gn", "lvl": 2, "fn": "comparer des personnes, des lieux, des époques", "rx": ["\\b[a-z]+er\\s+than\\b", "\\b(?:more|less|fewer)\\s+[a-z]+\\s+than\\b", "\\b(?:better|worse|further|farther)\\s+than\\b", "\\b(?:not\\s+)?(?:as|so)\\s+[a-z]+\\s+as\\b"], "rep": "Relevez les comparaisons. Qu'est-ce qui est comparé à quoi ?", "obs": "Classez : adjectifs courts / longs ; supériorité / infériorité / égalité.", "concept": ["Comment la longueur de l'adjectif change-t-elle la forme ?", "Quels comparatifs sont irréguliers ?", "Comment exprimer l'égalité ?"], "trace": "Adjectif court + -er than ; more / less + adjectif long + than ; as + adjectif + as (égalité). Irréguliers : good → better, bad → worse, far → further.", "train": ["Comparer deux villes / deux époques (photos).", "Top Trumps sur des monuments.", "Débat : city vs countryside."], "err": ["*more big", "*more better", "*than / that confondus"], "fr": "« Plus… que » unique en français : la double forme -er / more surprend.", "phono": "than /ðən/ faible ; -er /ə/.", "rel": ["superlative", "intensifiers", "contrast"], "cecrl": "A2", "prog": "5e A2 : comparatifs ; 4e A2+ : gamme variée ; 2nde B1+ : twice as much ; Tle B2 : as many/as much, fewer/less"}, {"id": "superlative", "label": "Superlatifs", "cat": "gn", "lvl": 2, "fn": "mettre en valeur, classer, promouvoir", "rx": ["\\bthe\\s+(?:most|least)\\s+[a-z]+\\b", "\\bthe\\s+(?:best|worst|furthest|farthest|[a-z]+iest|(?!(?:forest|interest|honest|modest|request|protest|harvest|contest|conquest|suggest|digest|invest|arrest)\\b)[a-z]{3,}est)\\b"], "rep": "Relevez les superlatifs. Que cherche à faire le document en les employant ?", "obs": "Classez : adjectifs courts / longs ; irréguliers. Repérez ce qui suit (in the world, ever, of all).", "concept": ["Combien d'éléments compare-t-on ?", "Pourquoi the est-il obligatoire ?", "Quel lien avec les comparatifs ?"], "trace": "the + adjectif court + -est ; the most / least + adjectif long. Irréguliers : the best, the worst. Souvent suivi de in + lieu, of + groupe, ever.", "train": ["Records du monde anglophone (quiz).", "Brochure touristique pour la tâche finale.", "Classement de la classe : the funniest film ever."], "err": ["*the more beautiful (pour superlatif)", "Oubli de the", "*the most big"], "fr": "« Le plus » unique ; l'anglais distingue -est / most.", "phono": "-est /ɪst/ ; accent maintenu sur l'adjectif.", "rel": ["comparative", "intensifiers", "exclam"], "cecrl": "A2", "prog": "5e A2 : quelques superlatifs ; 4e A2+ : gamme variée"}, {"id": "there_is", "label": "There is / there are", "cat": "phrase", "lvl": 0, "fn": "décrire un lieu, une image, signaler l'existence de quelque chose", "rx": ["\\bthere\\s+(?:is|are|was|were|'s|isn't|aren't|wasn't|weren't|will\\s+be|won't\\s+be|has\\s+been|have\\s+been|used\\s+to\\s+be|must\\s+be|might\\s+be|seems?\\s+to\\s+be)\\b", "\\bthere's\\b"], "rep": "Relevez there is / there are et ce qui les suit.", "obs": "Classez selon le nom qui suit : singulier / pluriel / indénombrable.", "concept": ["Quel élément décide is ou are ?", "Comment le mettre au passé, au futur ?", "Quelle différence avec « il y a » + durée (ago) ?"], "trace": "There is + singulier / indénombrable ; there are + pluriel. Le temps se porte sur be (there was, there will be).", "train": ["Décrire une image en binôme (jeu des différences).", "Plan de ville pour un correspondant.", "Inventaire d'une chambre / d'une valise."], "err": ["*It has (calque de « il y a »)", "Accord is / are", "*There is three years (pour ago)"], "fr": "« Il y a » couvre l'existence ET la durée écoulée (= ago) : à distinguer.", "phono": "there's /ðəz/ faible.", "rel": ["pres_be_ing", "quantifiers"], "cecrl": "A1", "prog": "6e A1 : there is / there are"}, {"id": "genitive", "label": "Génitif ('s / s')", "cat": "gn", "lvl": 0, "fn": "exprimer l'appartenance, les liens entre personnes", "rx": ["\\b(?!(?:it|he|she|that|what|there|here|let|who|where|how|everyone|nobody|one|everything|nothing|something|this)'s)[A-Za-z]+'s\\s+(?=[a-z])", "\\b[a-z]+s'\\s+(?=[a-z])"], "rep": "Relevez les 's et s'. Lesquels sont des génitifs, lesquels des contractions (is, has) ?", "obs": "Classez : possesseur singulier / pluriel ; personne / lieu / temps (today's news).", "concept": ["Dans quel ordre l'anglais place-t-il possesseur et possédé ?", "Où met-on l'apostrophe au pluriel ?", "Comment distinguer 's = is / has / génitif ?"], "trace": "Possesseur + 's + possédé (Tom's bike). Pluriel en -s : apostrophe seule (my parents' car). L'article du possédé disparaît.", "train": ["Arbre généalogique d'une famille célèbre.", "Objets perdus : Whose is it? It's…", "Quiz : Shakespeare's plays."], "err": ["*the bike of Tom (calque)", "*the Tom's bike", "Confusion 's / s'"], "fr": "Ordre inversé par rapport à « le vélo de Tom ».", "phono": "'s /s/, /z/, /ɪz/ selon le son final, comme le pluriel.", "rel": ["relative", "pronouns"], "cecrl": "A1", "prog": "6e A1 : génitif ; 2nde B1+ : N's N ; Tle B2 : groupe nominal complexe"}, {"id": "preterit", "label": "Prétérit simple", "cat": "temps", "lvl": 2, "fn": "raconter des événements passés, coupés du présent", "rx": ["\\b(?:{PRET})\\b", "\\b(?!(?:{EDX})\\b)[a-z]{2,}ed\\b", "\\b(?:didn't|did\\s+not)\\s+[a-z]+\\b"], "rep": "Relevez les verbes au prétérit et classez-les : réguliers (-ed) / irréguliers. Relevez les repères de temps (yesterday, in 1900, ago).", "obs": "Observez la négation et la question : que devient le verbe ?", "concept": ["L'action est-elle terminée ? Coupée du présent ?", "Quel indice montre le passé dans une négation (didn't) ?", "Comment se prononce -ed selon les verbes ?"], "trace": "Verbe + -ed ou forme irrégulière (2e colonne). Négation didn't + base, question Did… + base ? Situe l'action dans un passé révolu, daté ou daté par le contexte.", "train": ["Récit en chaîne à partir d'images séquentielles.", "Alibi / enquête.", "Biographie express d'une figure du monde anglophone."], "err": ["*He didn't went", "-ed prononcé /ed/ systématiquement", "*Did you saw"], "fr": "Couvre une partie du passé composé et du passé simple : « il est parti hier » → he left yesterday.", "phono": "-ed : /t/ (walked), /d/ (played), /ɪd/ (wanted).", "rel": ["past_be_ing", "pres_perfect", "past_perfect", "used_to", "chrono"], "cecrl": "A2", "prog": "6e A1+ : reconnaître quelques prétérits ; 5e A2 : utiliser réguliers et irréguliers"}, {"id": "pres_simple", "label": "Présent simple", "cat": "temps", "lvl": 0, "fn": "parler d'habitudes, de goûts, de vérités générales, raconter au présent de narration", "rx": ["\\b(?:he|she|it)\\s+(?:never\\s+|always\\s+|often\\s+|usually\\s+|sometimes\\s+|really\\s+|also\\s+)?(?!(?:is|was|has|does)\\b)[a-z]{2,}s\\b", "\\b(?:doesn't|don't|does\\s+not|do\\s+not)\\s+(?!have\\s+to\\b)[a-z]+\\b"], "rep": "Relevez les verbes au présent simple, en particulier ceux à la 3e personne du singulier.", "obs": "Classez : habitude / goût / vérité générale / récit. Observez la terminaison et la négation.", "concept": ["L'action se répète-t-elle ou est-elle vraie en général ?", "Pourquoi un -s à la 3e personne ?", "Que devient le -s à la forme négative ?"], "trace": "Base verbale (+ -s à la 3e personne du singulier). Négation don't / doesn't + base. Habitudes, goûts, vérités générales, présent de narration.", "train": ["Routine d'un personnage (images).", "Enquête Find someone who…", "Présent de narration : raconter un mythe."], "err": ["Oubli du -s (*he play)", "*He doesn't plays", "-s prononcé /s/ partout"], "fr": "Le présent français couvre à la fois le présent simple et be+ing.", "phono": "-s : /s/, /z/, /ɪz/ (works, plays, watches).", "rel": ["pres_be_ing", "freq", "questions"], "cecrl": "A1", "prog": "6e A1 : présent simple et 3e personne ; 5e : formes affirmative, négative, interrogative"}, {"id": "time_markers", "label": "for, since, ago", "cat": "lien", "lvl": 3, "fn": "situer et mesurer le temps", "rx": ["\\b(?:for|since)\\s+(?:\\d+|a|an|two|three|four|five|six|ten|many|several|a\\s+few|a\\s+long)\\s+(?:years?|months?|weeks?|days?|hours?|minutes?|ages|centuries|decades|time)\\b", "\\bsince\\s+(?:\\d{4}|then|childhood|last\\s+[a-z]+|yesterday|I\\s+was)\\b", "\\b(?:[a-z0-9]+\\s+){1,2}(?:years?|months?|weeks?|days?|hours?|minutes?|centuries|decades)\\s+ago\\b", "\\bfor\\s+ages\\b"], "rep": "Relevez for, since, ago et le temps du verbe qui les accompagne.", "obs": "Placez sur une frise : durée / point de départ / moment passé.", "concept": ["for indique-t-il une durée ou un point de départ ?", "Avec quel temps ago s'emploie-t-il ?", "Que traduit « depuis » en anglais ?"], "trace": "for + durée ; since + point de départ (avec present perfect quand ça dure encore) ; durée + ago + prétérit (il y a).", "train": ["Frise biographique.", "Interview : How long have you… ?", "Trier des repères temporels."], "err": ["*since three years", "*ago three years", "*I live here since"], "fr": "« Depuis » = for OU since ; « il y a » = ago.", "phono": "for /fə/ faible.", "rel": ["pres_perfect", "pp_be_ing", "preterit"], "cecrl": "A2+", "prog": "5e A2 : ago ; 4e A2+ : for, since, two days ago"}, {"id": "cause", "label": "Cause, conséquence, but", "cat": "lien", "lvl": 1, "fn": "justifier, expliquer, argumenter", "rx": ["\\b(?:because|because\\s+of|so\\s+that|that's\\s+why|therefore|as\\s+a\\s+result|consequently|in\\s+order\\s+to|so\\s+as\\s+to|thanks\\s+to|due\\s+to|owing\\s+to|since)\\b"], "rep": "Relevez les mots qui relient une cause et une conséquence, ou une action et son but.", "obs": "Classez : cause / conséquence / but. Observez ce qui suit (proposition ou nom ?).", "concept": ["Lequel des deux faits explique l'autre ?", "Quelle différence entre because et because of ?", "Comment exprimer un but ?"], "trace": "Cause : because + proposition, because of / due to + nom. Conséquence : so, that's why, therefore. But : to / in order to + base, so that + proposition.", "train": ["Chaînes de causes et conséquences (environnement, histoire).", "Justifier ses choix pour la tâche finale.", "Mini-débat avec cartes connecteurs."], "err": ["*because of + proposition", "*for to + verbe (calque de « pour »)", "so en tête de phrase à l'écrit formel"], "fr": "« Pour » + infinitif → to, jamais *for to.", "phono": "because /bɪˈkɒz/ réduit à 'cause à l'oral.", "rel": ["contrast", "cond1", "chrono"], "cecrl": "A1+", "prog": "6e A1+ : because, so ; 4e A2+ : consequently ; 3e B1 : as a result ; 2nde : in order to, so as to"}, {"id": "contrast", "label": "Opposition, concession", "cat": "lien", "lvl": 2, "fn": "nuancer, comparer des points de vue, concéder", "rx": ["\\b(?:although|though|even\\s+though|even\\s+if|however|whereas|despite|in\\s+spite\\s+of|on\\s+the\\s+other\\s+hand|nevertheless|nonetheless|on\\s+the\\s+contrary|instead)\\b"], "rep": "Relevez les mots qui marquent une opposition ou une concession.", "obs": "Observez la ponctuation et ce qui suit chaque connecteur (nom, V-ing, proposition).", "concept": ["Les deux idées s'opposent-elles vraiment ?", "Quelle construction après despite ?", "Lequel est plus formel ?"], "trace": "although / even though + proposition ; despite / in spite of + nom ou V-ing ; however, (en tête, suivi d'une virgule) ; whereas pour comparer deux réalités.", "train": ["Peser le pour et le contre (débat).", "Relier des paires de phrases.", "Critique de film nuancée."], "err": ["*despite of", "*although + nom", "but / however confondus à l'écrit"], "fr": "« Malgré » + nom → despite ; « bien que » + subjonctif → although + indicatif.", "phono": "however accentué sur la 2e syllabe.", "rel": ["cause", "comparative"], "cecrl": "A2", "prog": "5e A2 : but, whereas, however ; 4e A2+ : on the one hand…, yet ; 3e B1 : on the contrary"}, {"id": "chrono", "label": "Repères chronologiques du récit", "cat": "lien", "lvl": 0, "fn": "organiser un récit, enchaîner des étapes", "rx": ["\\b(?:first(?:\\s+of\\s+all)?|then|next|after\\s+that|afterwards|finally|at\\s+last|suddenly|one\\s+day|once\\s+upon\\s+a\\s+time|long\\s+ago|later(?:\\s+on)?|meanwhile|as\\s+soon\\s+as|eventually|in\\s+the\\s+end|at\\s+first|the\\s+next\\s+day)\\b"], "rep": "Relevez les mots qui organisent le récit dans le temps.", "obs": "Reconstituez la chronologie du passage à l'aide de ces mots.", "concept": ["Quel mot ouvre / clôt le récit ?", "Quelle différence entre at last et finally ?", "Que crée suddenly ?"], "trace": "Ouvrir : once upon a time, one day, at first. Enchaîner : then, next, after that, meanwhile. Rompre : suddenly. Clore : finally, in the end, at last (enfin, après attente).", "train": ["Remettre un récit en ordre.", "Récit collectif en chaîne.", "Storyboard puis narration orale."], "err": ["*at the end (pour « finalement »)", "Abus de and then", "after seul en tête"], "fr": "« Enfin » = at last ou finally selon le sens.", "phono": "Pause et intonation après le connecteur en tête.", "rel": ["preterit", "past_be_ing", "cause"], "cecrl": "A1", "prog": "6e A1 : first, then ; A1+ : finally ; 4e A2+ : before, afterwards"}, {"id": "freq", "label": "Adverbes de fréquence", "cat": "lien", "lvl": 1, "fn": "parler de ses habitudes, de la fréquence", "rx": ["\\b(?:always|usually|often|sometimes|never|rarely|seldom|hardly\\s+ever|occasionally|once\\s+a|twice\\s+a|every\\s+(?:day|week|month|year|morning|evening))\\b"], "rep": "Relevez les adverbes de fréquence et leur place dans la phrase.", "obs": "Placez-les sur une échelle de 0 à 100 %. Observez leur position par rapport au verbe et à be.", "concept": ["Où se place l'adverbe par rapport au verbe ? À be ?", "Quel temps l'accompagne le plus souvent ?", "Comment poser la question (How often… ?)"], "trace": "Avant le verbe lexical, après be et les auxiliaires (She is always late / She never eats meat). How often… ? pour interroger.", "train": ["Sondage de classe sur les habitudes.", "Routine d'un personnage.", "Graphique à commenter."], "err": ["*I go always", "Place après be", "never + négation (double négation)"], "fr": "Place différente : « je vais toujours » → I always go.", "phono": "often : /ˈɒfn/ (t muet) ou /ˈɒftən/.", "rel": ["pres_simple"], "cecrl": "A1+", "prog": "5e : adverbes de fréquence"}, {"id": "intensifiers", "label": "Intensité et nuance (very, really, too, quite)", "cat": "gn", "lvl": 1, "fn": "nuancer une opinion, intensifier une émotion", "rx": ["\\b(?:very|really|too|extremely|completely|totally|quite|rather|pretty|incredibly|absolutely|fairly|a\\s+bit|highly|deeply|terribly)\\s+[a-z]+\\b"], "rep": "Relevez les mots qui renforcent ou atténuent un adjectif.", "obs": "Placez-les sur une échelle d'intensité. Repérez too : positif ou négatif ?", "concept": ["Quelle différence entre very et too ?", "Lesquels s'emploient avec des adjectifs extrêmes (absolutely amazing) ?", "Que change quite selon l'intonation ?"], "trace": "very, really (intensifient), too (excès, souvent négatif), quite, rather, a bit (atténuent). Adjectifs extrêmes : absolutely, totally (pas very).", "train": ["Réagir à des images avec une échelle.", "Critique d'œuvre nuancée.", "Reformuler pour adoucir / renforcer."], "err": ["*very amazing", "too pour very (« trop bien »)", "*a bit good"], "fr": "« Trop » familier positif ≠ too.", "phono": "Saillance : accent d'insistance sur l'intensifieur (SO beautiful).", "rel": ["comparative", "superlative", "exclam"], "cecrl": "A1+", "prog": "6e A1+ : very, much, too ; 5e A2 : so, really, completely, quite ; 3e B1 : extremely, barely"}, {"id": "quantifiers", "label": "Quantifieurs (some, any, much, many, a lot of)", "cat": "gn", "lvl": 2, "fn": "exprimer la quantité, décrire, comparer des données", "rx": ["\\b(?:some|any|much|many|a\\s+lot\\s+of|lots\\s+of|a\\s+few|a\\s+little|plenty\\s+of|none\\s+of|most\\s+of|some\\s+of|all\\s+of|several|enough|no\\s+one|nobody|nothing|everyone|everybody|each)\\b"], "rep": "Relevez les quantifieurs et le nom qu'ils accompagnent.", "obs": "Classez : dénombrable / indénombrable ; phrase affirmative / négative / question.", "concept": ["Le nom est-il dénombrable ?", "Quand utilise-t-on any ?", "Quelle différence entre few et a few ?"], "trace": "much + indénombrable, many + dénombrable pluriel, a lot of + les deux. some (affirmatif), any (négatif, question). a few / a little : un peu (positif) ; few / little : peu (négatif). Partitifs : some of them, most of us.", "train": ["Liste de courses / pique-nique.", "Commenter un graphique d'enquête.", "Recette ou mode d'emploi."], "err": ["*much people", "*informations", "some / any inversés"], "fr": "Indénombrables différents (information, advice, furniture).", "phono": "some /səm/ faible devant un nom.", "rel": ["there_is", "comparative"], "cecrl": "A2", "prog": "5e A2 : much, many, some ; 4e A2+ : some of them, most of us ; 2nde B1+ : a few/few, a little/little"}, {"id": "pronouns", "label": "Pronoms possessifs et réfléchis", "cat": "gn", "lvl": 1, "fn": "désigner sans répéter, insister sur la personne", "rx": ["\\b(?:mine|yours|hers|ours|theirs|myself|yourself|himself|herself|itself|ourselves|yourselves|themselves|each\\s+other|one\\s+another)\\b", "\\b(?:my|his|her|their|our|your)\\s+own\\b"], "rep": "Relevez les pronoms possessifs, réfléchis et réciproques.", "obs": "Classez : possession / action sur soi / insistance / réciprocité.", "concept": ["Le pronom renvoie-t-il au sujet ?", "Quelle différence entre themselves et each other ?", "Comment s'accorde le possessif (his / her) ?"], "trace": "mine, yours, his, hers, ours, theirs remplacent possesseur + nom. -self / -selves : action sur soi ou insistance. each other : réciprocité. Possessif : accord avec le possesseur.", "train": ["Objets trouvés : It's mine / hers.", "Autoportrait : I made it myself.", "Relations entre personnages."], "err": ["*his mother (pour une fille)", "*themself", "Réfléchi superflu (*I wash myself every day)"], "fr": "Son / sa s'accordent avec l'objet, his / her avec le possesseur : erreur très fréquente.", "phono": "Accent sur -self.", "rel": ["genitive"], "cecrl": "A1+", "prog": "6e A1+ : pronoms possessifs ; 5e A2 : réfléchis ; 4e A2+ : each other, a friend of mine"}, {"id": "exclam", "label": "Exclamations (What a…!, How…!, so, such)", "cat": "discours", "lvl": 1, "fn": "réagir, exprimer une émotion, une admiration", "rx": ["\\bWhat\\s+an?\\s+[a-z]+(?:\\s+[a-z]+)?\\s*!", "\\bHow\\s+[a-z]+\\s*!", "\\b(?:so|such\\s+an?|such)\\s+[a-z]+[^.!?\\n]*!"], "rep": "Relevez les phrases exclamatives et le mot qui porte l'émotion.", "obs": "Classez : What a + nom / How + adjectif / so + adjectif / such a + nom.", "concept": ["Quel élément suit what ? how ?", "Quelle différence entre so et such ?", "Comment l'intonation porte-t-elle l'émotion ?"], "trace": "What a / an + (adjectif) + nom ! How + adjectif ! so + adjectif, such a + (adjectif) + nom.", "train": ["Réactions à des images surprenantes.", "Dialogue théâtral expressif.", "Commentaire sportif."], "err": ["*What beautiful!", "*so a big house", "*such beautiful"], "fr": "« Quel… ! » et « comme… ! » : proches mais what a exige l'article.", "phono": "Intonation exclamative, allongement de la syllabe accentuée.", "rel": ["intensifiers", "superlative"], "cecrl": "A1+", "prog": "6e A1+ : What a nice story! ; 5e : phrases exclamatives ; 2nde B1+ : toutes les formes"}, {"id": "imperative", "label": "Impératif", "cat": "phrase", "lvl": 0, "layer": "u", "fn": "donner des consignes, conseiller, inviter, convaincre", "rx": [{"p": "(?:^|[.!?\\n]\\s*|[\"“‘']\\s*)(?:Don't|Let's|Please|Be|Come|Look|Listen|Go|Take|Stop|Try|Help|Remember|Keep|Make|Put|Open|Close|Think|Imagine|Write|Read|Watch|Tell|Give|Wait|Join|Visit|Discover|Enjoy|Follow|Use|Check|Choose|Find|Explore|Save|Protect|Respect|Bring|Leave|Do|Get|Turn|Call|Ask|Never|Always)\\b(?!\\s+(?:you|he|she|it|they|we|I)\\b[^.!?\\n]*\\?)[^.!?\\n]*[.!]?", "f": "gm"}], "rep": "Relevez les phrases qui donnent un ordre, un conseil ou une invitation.", "obs": "Observez le début de phrase : où est le sujet ? Comment se forme la négation ?", "concept": ["À qui s'adresse-t-on ?", "Pourquoi n'y a-t-il pas de sujet ?", "Comment rendre l'ordre plus poli ?"], "trace": "Base verbale sans sujet. Négation Don't + base. Let's + base pour inclure le locuteur. Please / Could you… ? pour adoucir.", "train": ["Consignes d'un jeu, d'une recette.", "Affiche de prévention.", "Slogans pour une campagne."], "err": ["*Don't to go", "*Let's to go", "*No touch"], "fr": "Proche du français, mais pas de distinction tu / vous.", "phono": "Intonation descendante ferme ; please change le ton.", "rel": ["modal_oblig", "cond1"], "cecrl": "A1", "prog": "6e A1 : reconnaître l'impératif ; A1+ : forme négative et No + V-ing"}, {"id": "direct_speech", "label": "Discours direct", "cat": "discours", "lvl": 0, "layer": "u", "fn": "faire entendre la voix des personnages, dialoguer", "rx": [{"p": "[\"“][^\"”\\n]{2,}[\"”]", "f": "g"}, {"p": "(?:^|[\\s(—–-])'[A-Z][^\\n]*?[.!?,]'(?=\\s|$|[,;:.])", "f": "gm"}], "rep": "Repérez les paroles rapportées entre guillemets et le verbe qui les introduit.", "obs": "Relevez les verbes introducteurs autres que say : que nous apprennent-ils sur le ton ?", "concept": ["Qui parle ? À qui ?", "Où se place le verbe introducteur ?", "Que change l'inversion (said the man) ?"], "trace": "Guillemets anglais, ponctuation à l'intérieur. Verbes introducteurs variés (whisper, shout, mutter, reply) pour le ton. Inversion possible après la citation (said Tom).", "train": ["Mise en voix d'un extrait.", "Transformer un récit en dialogue.", "Bande dessinée : bulles à remplir."], "err": ["Ponctuation française « »", "say répété", "Confusion avec le discours rapporté"], "fr": "Typographie différente (« » vs “ ”).", "phono": "Changement de voix, de ton selon le verbe introducteur.", "rel": ["reported", "questions"], "cecrl": "A1", "prog": "Récit et dialogues dès la 6e (exemples du programme)"}]}
+</script>
+<script>
+(function(){
+"use strict";
+if (!window.Element.prototype.closest){ window.Element.prototype.closest = function(s){ var el = this; while (el && el.nodeType === 1){ if (el.matches ? el.matches(s) : el.msMatchesSelector(s)) return el; el = el.parentElement; } return null; }; }
+var KB = JSON.parse(document.getElementById("kb").textContent);
+var LEVELS = ["6e","5e","4e","3e","2nde","1re","Tle"];
+var PROFILES = ["LVA","LVB","LVC"];
+var CECRL = {
+  LVA:["A1+","A2","A2+","B1","B1+","B1+","B2"],
+  LVB:["A1","A1+","A1+","A2","A2+","B1","B1"],
+  LVC:["","","","","A1+","A2","A2+ / B1"]
+};
+var PROG = ["BO n° 22 du 29 mai 2025","BO n° 22 du 29 mai 2025","Programme 2020 (BO n° 31 du 30 juillet 2020) en 2026-2027","Programme 2020 (BO n° 31 du 30 juillet 2020) en 2026-2027","BO n° 22 du 29 mai 2025","BO n° 22 du 29 mai 2025","BO n° 22 du 29 mai 2025"];
+var ACTIVITIES = ["Compréhension de l'écrit","Compréhension de l'oral","Expression orale en continu","Expression orale en interaction","Expression écrite","Médiation"];
+var MODS = ["Classe entière","Individuel","Binômes","Groupes","Îlots","Mixte"];
+var DEMARCHES = [
+  {id:"inductive", label:"Inductive : observer, conceptualiser, réemployer"},
+  {id:"tblt", label:"Focus on form en tâche (TBLT)"},
+  {id:"erreurs", label:"À partir des erreurs des élèves"},
+  {id:"contraste", label:"Contrastive et plurilingue"},
+  {id:"explicite", label:"Explicite guidée"}
+];
+var SAMPLE_TITLE = "Oscar Wilde, « The Happy Prince » (1888), incipit";
+var SAMPLE = "High above the city, on a tall column, stood the statue of the Happy Prince. He was gilded all over with thin leaves of fine gold, for eyes he had two bright sapphires, and a large red ruby glowed on his sword-hilt.\n\nHe was very much admired indeed. 'He is as beautiful as a weathercock,' remarked one of the Town Councillors who wished to gain a reputation for having artistic tastes; 'only not quite so useful,' he added, fearing lest people should think him unpractical, which he really was not.\n\n'Why can't you be like the Happy Prince?' asked a sensible mother of her little boy who was crying for the moon. 'The Happy Prince never dreams of crying for anything.'\n\n'I am glad there is some one in the world who is quite happy,' muttered a disappointed man as he gazed at the wonderful statue.";
+
+var LS = {bank:"prllab.bank.v1", draft:"prllab.draft.v1", an:"prllab.analyse.v1", theme:"prllab.theme"};
+
+/* ---------- utils ---------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function uid(){ return "prl-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,7); }
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function lsGet(k, d){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ toast("Sauvegarde locale impossible sur ce navigateur"); return false; } }
+function fmtDate(t){ var d = new Date(t); function z(n){ return (n<10?"0":"")+n; } return z(d.getDate())+"/"+z(d.getMonth()+1)+"/"+d.getFullYear(); }
+var toastT = null;
+function toast(msg){ var t = $("toast"); t.textContent = msg; t.className = "toast on"; clearTimeout(toastT); toastT = setTimeout(function(){ t.className = "toast"; }, 2400); }
+function fill(p){ return p.replace(/\{PP\}/g, KB.lexicon.PP).replace(/\{PRET\}/g, KB.lexicon.PRET).replace(/\{EDX\}/g, KB.lexicon.EDX).replace(/\{ADJX\}/g, KB.lexicon.ADJX); }
+function byId(id){ for (var i=0;i<KB.points.length;i++){ if (KB.points[i].id === id) return KB.points[i]; } return null; }
+function catColor(p){ return "var(--" + KB.cats[p.cat].color + ")"; }
+function taskById(id){ for (var i=0;i<KB.tasks.length;i++){ if (KB.tasks[i].id === id) return KB.tasks[i]; } return null; }
+
+/* compile regexes */
+KB.points.forEach(function(p){
+  p._rx = [];
+  (p.rx || []).forEach(function(r){
+    var src = typeof r === "string" ? r : r.p, fl = typeof r === "string" ? "gi" : r.f;
+    try { p._rx.push(new RegExp(fill(src), fl)); } catch(e) {}
+  });
+});
+
+/* ---------- modal ---------- */
+function openModal(html){ $("modalBody").innerHTML = html; $("modal").className = "modal on"; var f = $("modalBody").querySelector("button,input"); if (f) f.focus(); }
+function closeModal(){ $("modal").className = "modal"; }
+function confirmBox(title, text, okLabel, cb){
+  openModal('<h3>'+esc(title)+'</h3><p class="hint">'+esc(text)+'</p><div class="btns"><button class="btn hot" id="mOk">'+esc(okLabel)+'</button><button class="btn" id="mNo">Annuler</button></div>');
+  $("mOk").onclick = function(){ closeModal(); cb(); };
+  $("mNo").onclick = closeModal;
+}
+$("modal").addEventListener("click", function(e){ if (e.target === $("modal")) closeModal(); });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeModal(); });
+
+/* ---------- state ---------- */
+var saved = lsGet(LS.an, {});
+var S = {
+  view:"analyse",
+  level: typeof saved.level === "number" ? saved.level : 3,
+  profile: saved.profile || "LVA",
+  task: saved.task || "",
+  text: saved.text || "",
+  docTitle: saved.docTitle || "",
+  res:null, focus:null,
+  bank: lsGet(LS.bank, []),
+  cur: lsGet(LS.draft, null),
+  axe: saved.axe || "",
+  rtab:"in", rfilter:"all", collapsed:false, acc:"cadre", phOpen:-1
+};
+var CI = {"A1":0,"A1+":1,"A2":2,"A2+":3,"B1":4,"B1+":5,"B2":6};
+function ciOf(str){ var m = String(str || "").match(/[AB][12]\+?/); return m && CI[m[0]] != null ? CI[m[0]] : 2; }
+var TARGET = null;
+function eff(){ return TARGET != null ? TARGET : ciOf(cecrlFor(S.level, S.profile)); }
+function cecrlFor(level, profile){ var v = CECRL[profile][level]; return v || "Non concerné (LVC au lycée)"; }
+function saveAn(){ lsSet(LS.an, {level:S.level, profile:S.profile, task:S.task, text:S.text, docTitle:S.docTitle, axe:S.axe}); }
+
+/* ---------- detection ---------- */
+function sentences(t){
+  var re = /[^.!?\n]+[.!?]*['"”’]?/g, m, out = [];
+  while ((m = re.exec(t))){ if (m[0].replace(/\s/g,"").length) out.push({s:m.index, e:m.index+m[0].length, txt:m[0]}); }
+  return out;
+}
+function trimStart(t, s, e){ while (s < e && /[\s.!?"“”‘’'\n]/.test(t.charAt(s))) s++; return s; }
+function sentenceOf(sents, i){ for (var k=0;k<sents.length;k++){ if (i >= sents[k].s && i < sents[k].e) return sents[k]; } return null; }
+var PPRX = "(?:" + KB.lexicon.PP + "|[a-z]{2,}ed)";
+var COND = {
+  cond3: function(s){ return new RegExp("\\bhad\\s+(?:not\\s+|never\\s+)?" + PPRX + "\\b","i").test(s) && /\b(?:would|could|might)(?:n't)?\s+(?:not\s+)?have\b|'d\s+have\b/i.test(s); },
+  cond2: function(s){ return /\b(?:would|could|might)(?:n't)?\s+(?!have\b)[a-z]+|\b(?:I|you|he|she|we|they)'d\s+(?!have\b|better\b|rather\b)[a-z]+/i.test(s) && !COND.cond3(s); },
+  cond1: function(s){ return /\b(?:will|won't|'ll|can|may|might|must|should)\b/i.test(s) && !/\b(?:would|could)\b|'d\s/i.test(s); }
+};
+function analyse(text){
+  var sents = sentences(text), res = {pts:{}, order:[], total:0, sents:sents.length};
+  KB.points.forEach(function(p){
+    var list = [];
+    if (p.sp){
+      sents.forEach(function(se){
+        if (!/\b(?:if|unless)\b/i.test(se.txt)) return;
+        if (COND[p.sp](se.txt)){ var s = trimStart(text, se.s, se.e); list.push({s:s, e:se.e, txt:text.slice(s, se.e)}); }
+      });
+    } else {
+      p._rx.forEach(function(re){
+        re.lastIndex = 0; var m;
+        while ((m = re.exec(text))){
+          if (!m[0].length){ re.lastIndex++; continue; }
+          var s = trimStart(text, m.index, m.index + m[0].length), e = m.index + m[0].length;
+          while (e > s && /\s/.test(text.charAt(e-1))) e--;
+          if (e <= s) continue;
+          if (p.noQ){ var se = sentenceOf(sents, s); if (se && /\?\s*['"”’]?\s*$/.test(se.txt)) continue; }
+          var dup = false;
+          for (var k=0;k<list.length;k++){ if (s < list[k].e && e > list[k].s){ dup = true; break; } }
+          if (!dup) list.push({s:s, e:e, txt:text.slice(s,e)});
+        }
+      });
+    }
+    if (list.length){ list.sort(function(a,b){ return a.s-b.s; }); res.pts[p.id] = list; res.order.push(p.id); res.total += list.length; }
+  });
+  return res;
+}
+function status(p){
+  var e = eff(), d = p.lvl - e;
+  if (d <= -2) return {cls:"ok", rank:1, label:"Acquis antérieur (" + p.cecrl + ") : à réactiver"};
+  if (d <= 0) return {cls:"core", rank:0, label:"Au programme du niveau (" + p.cecrl + ")"};
+  if (d <= 2) return {cls:"up", rank:2, label:"Niveau supérieur (" + p.cecrl + ") : production guidée"};
+  return {cls:"far", rank:3, label:"Au-delà (" + p.cecrl + ") : reconnaître seulement"};
+}
+
+
+/* ---------- axes et objets d'étude (BO n° 22 du 29 mai 2025, annexes 3 et 4) ---------- */
+function AX(n, o){ return {n:n, o:o || []}; }
+var C4_2020 = {label:"Programme 2020 (en vigueur en 2026-2027)", list:[AX("Thème · Langages"),AX("Thème · École et société"),AX("Thème · Voyages et migrations"),AX("Thème · Rencontres avec d'autres cultures")]};
+var AXES = [
+ {cur:{label:"Programme 2025", list:[
+  AX("Axe 1 · Personnes et personnages",["Journal de bord et journal intime","Familles fictives et réelles","Les animaux à l'origine de leçons de vie dans les fictions","Masques et costumes"]),
+  AX("Axe 2 · Le quotidien : vivre, jouer, apprendre",["Les lieux de vie des élèves des pays anglophones","Sports populaires et traditionnels","L'école et son organisation","Les vacances aux États-Unis et leurs spécificités"]),
+  AX("Axe 3 · Pays et paysages",["À la découverte du fleuve Mississippi","Les Highlands en Écosse","Les parcs nationaux du Kenya, avec leur faune et flore","Mers et océans dans les pays anglophones, un bain linguistique"]),
+  AX("Axe 4 · Imaginaire, contes et légendes",["L'image du dragon","L'Irlande, terre de mythes et de légendes","It's a kind of magic : sorciers et magiciens dans le folklore et la fiction","L'univers poétique et farfelu du Dr. Seuss"]),
+  AX("Axe 5 · Arts et expression des sentiments",["Réalité augmentée, un regard sur l'art","Le pouvoir évocateur de la musique","L'imagerie des fêtes de fin d'année","Supercalifragilisticexpialidocious et la musicalité de la langue anglaise"])]}},
+ {cur:{label:"Programme 2025", list:[
+  AX("Axe 1 · Portrait, autoportrait",["Les yearbooks et la valorisation des talents des élèves","Les familles présidentielles américaines","The National Portrait Gallery : l'histoire britannique en image","Écrire sur soi et sur les autres : l'espace intime et ludique de la poésie"]),
+  AX("Axe 2 · Le quotidien : lieux, rythmes, saisons",["Les rythmes et saisons à travers la peinture","Les vacances au rythme des saisons","Rythmes de vie : les moyens de déplacement","Autour de la table"]),
+  AX("Axe 3 · Le réel et l'imaginaire",["Mondes réels, mondes rêvés : de la cité idéale de la famille Cadbury à l'imaginaire de Roald Dahl","Un imaginaire nourri de clichés : les images véhiculées par les médias sur les pays anglophones","L'imaginaire pour penser le réel dans la littérature fantastique","Rêveries initiatiques (naviguer avec Mark Twain)"]),
+  AX("Axe 4 · École et loisirs",["Découvrir des formes scolaires inhabituelles","Des cliques aux fraternités et sororités","Les clubs à l'école","Représenter, raconter l'école dans les œuvres littéraires et cinématographiques"]),
+  AX("Axe 5 · Des langues, des lieux, des histoires",["Migrations : lieux de passage, lieux de mémoire","Écrire sur la ville, écrire dans la ville","Une langue, des déclinaisons : comprendre l'évolution de la langue anglaise au regard des transformations des sociétés anglophones","Un patrimoine, des histoires : l'exemple de Columbus Day, Thanksgiving ou Juneteenth aux États-Unis"]),
+  AX("Axe 6 · Le Royaume-Uni (obligatoire)",["Découvrir le patrimoine britannique grâce au National Trust","Du Nord au Sud : un Royaume-Uni aux multiples identités","La famille royale à travers son iconographie","La BBC, une institution dans la vie des familles britanniques"])]}},
+ {cur:C4_2020, next:{label:"Programme 2025 (à partir de la rentrée 2027)", list:[
+  AX("Axe 1 · Sport et société",["NCAA, le sport universitaire aux États-Unis","Le hockey sur glace : une institution au Canada","Le cricket dans les pays du Commonwealth","Aussie Rules football : incarner les valeurs de la société australienne par le sport"]),
+  AX("Axe 2 · Voyages et explorations",["La fin de l'ère héroïque de l'exploration : Ernest Shackleton et l'Endurance","Les grands voyages de découverte : Captain Cook","L'Empire britannique : Stanley et Livingstone","La conquête spatiale : l'espace de tous les possibles"]),
+  AX("Axe 3 · Villes, villages, quartiers",["Melbourne, the Garden City","Soweto, Johannesburg, et la lutte contre l'apartheid","Poundbury, Dorset : ville nouvelle","Les gated communities aux États-Unis : une nouvelle forme de ségrégation ?"]),
+  AX("Axe 4 · Inventer, innover, créer",["La création artistique pour sensibiliser notre regard","La mode à l'avant-garde","Révolution numérique et évolution sociale","Le génie à l'œuvre : comment la figure de l'inventeur reflète-t-elle les transformations des sociétés anglophones ?"]),
+  AX("Axe 5 · Langages et messages artistiques",["La musique, langage artistique et politique","La mécanique du gag","Des planches aux plateaux de cinéma","Tradition et modernité : la transmission des traditions par l'art"]),
+  AX("Axe 6 · L'Irlande (obligatoire)",["Céad míle fáilte, bienvenue cent mille fois : l'Irlande, terre d'accueil","Les traditions irlandaises à l'heure de la modernité","L'Irlande sur la scène européenne","The Wild Atlantic Way : une route source d'inspiration"])]}},
+ {cur:C4_2020, next:{label:"Programme 2025 (à partir de la rentrée 2028)", list:[
+  AX("Axe 1 · À la rencontre de l'autre",["La rencontre dans les œuvres de fiction ou les œuvres d'art","Les couples célèbres","L'expérience de la marginalité vue par les artistes du monde anglophone","Rencontre entre les peuples : James Cook et les Maoris, entre violence et processus de réconciliation"]),
+  AX("Axe 2 · Travailler hier, aujourd'hui, demain",["Le travail des enfants a-t-il vraiment disparu dans tous les pays de l'aire anglophone ?","L'organisation du travail : les États-Unis, un laboratoire","Dépasser les stéréotypes et les assignations","Teen jobs : les « petits boulots » des adolescents américains hier et aujourd'hui"]),
+  AX("Axe 3 · Voyages et migrations",["Migrations internes aux États-Unis","Migration vers l'Australie","Errer, vagabonder, se perdre, se laisser surprendre : la représentation du « vagabond » dans les œuvres anglophones","Le tourisme de masse dans les Caraïbes"]),
+  AX("Axe 4 · Langages et médias",["Diversité des langues : la place du multilinguisme dans les pays de l'aire anglophone","Les codes linguistiques ou la langue comme marqueur social, géographique, générationnel","Grands discours, grands orateurs qui inspirent et provoquent des changements significatifs dans l'histoire mondiale","La publicité, entre communication et soft power"]),
+  AX("Axe 5 · Formes de l'engagement",["L'engagement politique pour les droits des femmes ou des minorités","L'engagement des artistes","L'engagement individuel au service de la communauté","La philanthropie, un engagement pour le bien public ?"]),
+  AX("Axe 6 · Les États-Unis (obligatoire)",["L'expédition de Lewis et Clark","Jeune pays, grande Histoire, multiples acteurs : de la Seconde Guerre mondiale à nos jours","« Chicago, it is America's pulse » (Sarah Bernhardt) : Chicago, ville représentative des États-Unis ?","La culture, outil du soft power américain"])]}},
+ {cur:{label:"Programme 2025", list:[
+  AX("Axe 1 · Représentation de soi et rapport à autrui",["Les normes en question : conformité, contestation, réappropriation","Identité mouvante : la revendication d'identités multiples à travers les arts (photographie, costumes, etc.)","La construction des canons de beauté des Préraphaélites aux beauty pageants","La mode comme outil de revendication et témoignage d'une époque (conseillé en LVC)"]),
+  AX("Axe 2 · Vivre entre générations",["Les relations intergénérationnelles dans la diaspora indienne","L'évolution de la cellule familiale et de ses représentations (conseillé en LVC)","Patrimoine immobilier et société de classes au Royaume-Uni","L'écologie : une fracture générationnelle ?"]),
+  AX("Axe 3 · Le passé dans le présent",["La culture aborigène dans l'Australie contemporaine","Les commissions de réconciliation dans les pays anglophones : reconnaître le passé pour mieux vivre ensemble","Une Couronne britannique inscrite dans le temps : entre neutralité politique et engagement face aux enjeux contemporains (conseillé en LVC)","Architecture et sculptures, témoins d'une époque"]),
+  AX("Axe 4 · Défis et transitions",["Les formes de mobilisation populaire : des trade unions au hashtag","Transports et (re)structuration des espaces","Repenser l'espace urbain face aux évolutions démographiques","Le monde des objets : production, consommation, recyclage (conseillé en LVC)"]),
+  AX("Axe 5 · Créer et recréer",["Évolution d'un mythe : le cowboy","Les réinterprétations d'un conte ou d'une légende au fil du temps et des auteurs","Ces grandes œuvres classiques qui se déclinent au fil des époques (conseillé en LVC)","La machine hollywoodienne ou comment Hollywood se met en scène"]),
+  AX("Axe 6 · Les pays du Commonwealth : héritages, unité, diversité (obligatoire)",["La littérature anglophone, témoignage de l'histoire et d'histoires","De l'empire aux indépendances : transitions postcoloniales","Permanence et rupture dans les héritages politiques britanniques","Représenter le Commonwealth de sa conception à aujourd'hui (conseillé en LVC)"])]}},
+ {cur:{label:"Programme 2025", list:[
+  AX("Axe 1 · Identités et échanges",["Migrations et politiques d'accueil : le cas du Canada","La Windrush generation et sa contribution à la société du Royaume-Uni","Les frontières, lieux d'échanges ?","La construction de l'identité : le cas de la frontière entre l'Irlande et l'Irlande du Nord (conseillé en LVC)"]),
+  AX("Axe 2 · Diversité et inclusion",["Logement et mixité sociale","La Cour Suprême des États-Unis : matrice d'inclusion et d'exclusion","Mobilité sociale et discrimination positive dans les aires anglophones (conseillé en LVC)","Représentation politique des Peuples premiers : intégration ou appropriation ?"]),
+  AX("Axe 3 · Art et pouvoir",["L'art, les artistes et le pouvoir","L'art comme vecteur de résistance ou de reconnaissance","S'engager dans la presse et les médias : dessins, caricatures et photojournalisme","Mise en scène et représentation du pouvoir politique dans le cinéma et les séries de fiction (conseillé en LVC)"]),
+  AX("Axe 4 · Innovations scientifiques et responsabilité",["À qui appartient l'espace ? (conseillé en LVC)","Énergies d'hier et de demain : l'exemple de l'Écosse","La science et la quête de l'homme parfait","Révolutions industrielles, technologiques, numériques et contre-révolutions"]),
+  AX("Axe 5 · L'être humain et la nature",["Les Parcs Nationaux, outils de préservation de la nature","Vivre avec et vivre de la nature (conseillé en LVC)","L'homme face à la nature et aux évènements météorologiques","La sacralisation de la nature dans l'art et dans la fiction"]),
+  AX("Axe 6 · Les aires anglophones américaines (obligatoire)",["Les Caraïbes dans les Amériques et le monde","Porto Rico : le 51e état ?","Le pôle d'attraction nord-américain (conseillé en LVC)","Vancouver et Seattle : regards croisés"])]}},
+ {cur:{label:"Programme 2025", list:[
+  AX("Axe 1 · Espace privé et espace public",["Le corps des femmes : entre domaine public et sphère privée","Les chasses aux sorcières, de Salem à Hollywood, tribunal médiatique et procès d'intentions","Les espaces de travail, privés ou publics (conseillé en LVC)","Nouvelles formes d'habitat urbain et espaces transitionnels : chez soi et ensemble"]),
+  AX("Axe 2 · Territoire et mémoire",["Histoire et mémoire de l'esclavage et de la colonisation dans les sociétés du monde anglophone","Les commémorations au sein du Commonwealth","La construction des lieux de mémoire (conseillé en LVC)","Territoires autochtones : intégration, assimilation ou appropriation ?"]),
+  AX("Axe 3 · Fictions et réalités",["La dystopie, une catharsis sociétale ?","La société de classes britannique dans la fiction : entre représentation et remise en cause (conseillé en LVC)","Quand la science-fiction nourrit l'innovation scientifique","Le rêve américain à travers la fiction : le questionnement d'un mythe"]),
+  AX("Axe 4 · Enjeux et formes de la communication",["L'anglophonie, nouvelle Tour de Babel ? Parler anglais rapproche-t-il les peuples ou aplanit-il les singularités ? (conseillé en LVC)","Chacun sa vérité ? Le défi du complotisme","Forme et portée du discours politique, de Winston Churchill aux réseaux sociaux","Les précautions sémantiques dans les œuvres : inclusion, censure ou trahison ?"]),
+  AX("Axe 5 · Citoyenneté et mondes virtuels",["La vie connectée est-elle synonyme de vie exposée ? (conseillé en LVC)","Le jeu vidéo comme nouvelle forme du soft power américain ?","Nouvelles modalités d'apprentissage à l'heure de l'intelligence artificielle dans le monde éducatif anglophone","La parole sur les réseaux sociaux : portée et limites du pouvoir horizontal"]),
+  AX("Axe 6 · Le Royaume-Uni et ses nations (obligatoire)",["Un Royaume toujours uni ?","La BBC, vecteur de soft power britannique ? (conseillé en LVC)","Glasgow et Édimbourg : deux visages de l'Écosse en mutation","L'Irlande du Nord : identités plurielles ?"])]}}
+];
+function axesOf(level){ var a = AXES[level] || AXES[0], out = a.cur.list.slice(); if (a.next) out = out.concat(a.next.list); return out.map(function(x){ return x.n; }); }
+function axeKnown(level, v){ return !!v && axesOf(level).indexOf(v) > -1; }
+function axeObj(level, v){ var a = AXES[level] || AXES[0], all = a.cur.list.concat(a.next ? a.next.list : []); for (var i=0;i<all.length;i++){ if (all[i].n === v) return all[i]; } return null; }
+function selectWithOther(id, groups, cur, placeholder, attr){
+  var known = false;
+  groups.forEach(function(g){ g.list.forEach(function(x){ if (x === cur) known = true; }); });
+  var other = !!cur && !known;
+  var h = '<select class="in" id="'+id+'" '+attr+'="1"><option value="">— '+esc(placeholder)+' —</option>';
+  groups.forEach(function(g){ var opts = g.list.map(function(x){ return '<option value="'+esc(x)+'"'+(x===cur?" selected":"")+'>'+esc(x)+'</option>'; }).join(""); h += g.label ? '<optgroup label="'+esc(g.label)+'">' + opts + '</optgroup>' : opts; });
+  h += '<option value="__other"'+(other?" selected":"")+'>Autre (saisie libre)</option></select>';
+  h += '<input class="in'+(other?"":" hide")+'" id="'+id+'Other" '+attr+'-other="1" style="margin-top:8px" placeholder="Saisie libre" value="'+esc(other?cur:"")+'">';
+  return h;
+}
+function axeSelect(level, cur, id){
+  var a = AXES[level] || AXES[0], groups = [{label:a.cur.label, list:a.cur.list.map(function(x){ return x.n; })}];
+  if (a.next) groups.push({label:a.next.label, list:a.next.list.map(function(x){ return x.n; })});
+  return selectWithOther(id, groups, cur, "Choisir l'axe", "data-axe");
+}
+function objetSelect(level, axe, cur, id){
+  var o = axeObj(level, axe);
+  if (!o || !o.o.length) return '<input class="in" id="'+id+'Other" data-obj-other="1" placeholder="'+(axe ? "Objet d'étude (saisie libre)" : "Choisissez d'abord l'axe, ou saisissez librement")+'" value="'+esc(cur||"")+'">';
+  return selectWithOther(id, [{label:"Objets d'étude possibles (BO)", list:o.o}], cur, "Choisir un objet d'étude", "data-obj");
+}
+
+/* ---------- views ---------- */
+function setView(v){
+  S.view = v;
+  var tabs = document.querySelectorAll(".tab");
+  for (var i=0;i<tabs.length;i++){ tabs[i].setAttribute("aria-selected", tabs[i].getAttribute("data-v") === v ? "true" : "false"); }
+  var views = document.querySelectorAll(".view");
+  for (var j=0;j<views.length;j++){ views[j].className = "view" + (views[j].id === "v-" + v ? " on" : ""); }
+  if (v === "build") renderBuild();
+  if (v === "bank") renderBank();
+  updateActionBar();
+  window.scrollTo(0,0);
+}
+function updateBankCount(){ $("bankN").textContent = S.bank.length; }
+
+/* ---------- analyse view ---------- */
+function segHtml(arr, cur, attr){
+  return arr.map(function(x, i){ var val = attr === "lvl" ? i : x; return '<button type="button" data-'+attr+'="'+val+'" aria-pressed="'+(val === cur ? "true" : "false")+'">'+esc(x)+'</button>'; }).join("");
+}
+function renderSettings(){
+  $("lvlSeg").innerHTML = segHtml(LEVELS, S.level, "lvl");
+  $("profSeg").innerHTML = segHtml(S.level >= 4 ? PROFILES : ["LVA","LVB"], S.profile, "prof");
+  $("cecrlOut").innerHTML = "Niveau visé en fin d'année : <b>" + esc(cecrlFor(S.level, S.profile)) + "</b><br>Programme : " + esc(PROG[S.level]);
+  $("axeBox").innerHTML = axeSelect(S.level, S.axe, "anAxe");
+  $("taskSel").innerHTML = '<option value="">— Pas encore choisie —</option>' + KB.tasks.map(function(t){ return '<option value="'+t.id+'"'+(t.id===S.task?" selected":"")+'>'+esc(t.label)+'</option>'; }).join("");
+  renderSummary();
+}
+function renderSummary(){
+  var t = taskById(S.task);
+  $("anSummary").innerHTML = '<div class="summary"><div class="chips"><span class="chip">'+esc(LEVELS[S.level]+" "+S.profile)+'</span>' + (S.axe ? '<span class="chip">'+esc(S.axe.length > 34 ? S.axe.slice(0,34)+"…" : S.axe)+'</span>' : '') + (t ? '<span class="chip">'+esc(t.label)+'</span>' : '') + (S.docTitle ? '<span class="chip">'+esc(S.docTitle.length > 30 ? S.docTitle.slice(0,30)+"…" : S.docTitle)+'</span>' : '') + '</div><button class="btn sm" id="btnEditIn" type="button">Modifier</button></div>';
+  $("anSummary").className = "panel" + (S.collapsed ? "" : " hide");
+  $("anInput").className = S.collapsed ? "hide" : "";
+  $("btnEditIn").onclick = function(){ S.collapsed = false; renderSummary(); };
+}
+$("lvlSeg").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if (!b) return;
+  S.level = parseInt(b.getAttribute("data-lvl"),10);
+  if (S.level < 4 && S.profile === "LVC") S.profile = "LVA";
+  if (!axeKnown(S.level, S.axe)) S.axe = "";
+  saveAn(); renderSettings(); if (S.res) renderResults();
+});
+$("profSeg").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; S.profile = b.getAttribute("data-prof"); saveAn(); renderSettings(); if (S.res) renderResults(); });
+$("taskSel").addEventListener("change", function(){ S.task = this.value; saveAn(); if (S.res) renderResults(); });
+$("axeBox").addEventListener("change", function(e){
+  var el = e.target;
+  if (el.getAttribute("data-axe")){ var o = $("anAxeOther"); if (el.value === "__other"){ o.className = "in"; o.focus(); S.axe = o.value; } else { o.className = "in hide"; S.axe = el.value; } saveAn(); }
+});
+$("axeBox").addEventListener("input", function(e){ if (e.target.getAttribute("data-axe-other")){ S.axe = e.target.value; saveAn(); } });
+$("txt").addEventListener("input", function(){ S.text = this.value; saveAn(); });
+$("docTitle").addEventListener("input", function(){ S.docTitle = this.value; saveAn(); });
+$("btnScan").addEventListener("click", function(){
+  var t = $("txt").value;
+  if (t.replace(/\s/g,"").length < 20){ toast("Collez un texte ou un script d'au moins une phrase"); $("txt").focus(); return; }
+  S.text = t; S.focus = null; S.rtab = "in"; S.rfilter = "all"; S.res = analyse(t); saveAn();
+  if (window.innerWidth <= 960){ S.collapsed = true; renderSummary(); }
+  renderResults();
+  $("results").scrollIntoView({behavior:"smooth", block:"start"});
+});
+$("btnSample").addEventListener("click", function(){ $("txt").value = SAMPLE; $("docTitle").value = SAMPLE_TITLE; S.text = SAMPLE; S.docTitle = SAMPLE_TITLE; saveAn(); $("btnScan").click(); });
+$("btnClear").addEventListener("click", function(){ $("txt").value = ""; $("docTitle").value = ""; S.text = ""; S.docTitle = ""; S.res = null; S.focus = null; saveAn(); renderResults(); $("txt").focus(); });
+
+function scanHtml(){
+  var t = S.text, n = t.length, bg = new Array(n), ul = new Array(n);
+  var ids = S.focus ? [S.focus] : S.res.order;
+  ids.forEach(function(id){
+    var p = byId(id), list = S.res.pts[id] || [], layer = p.layer === "u" ? ul : bg;
+    list.forEach(function(m){
+      for (var i=m.s;i<m.e;i++){ if (layer[i]) return; }
+      for (var j=m.s;j<m.e;j++){ layer[j] = id; }
+    });
+  });
+  var out = "", i = 0;
+  while (i < n){
+    var b = bg[i] || "", u = ul[i] || "", j = i;
+    while (j < n && (bg[j]||"") === b && (ul[j]||"") === u) j++;
+    var chunk = esc(t.slice(i,j));
+    if (b || u){
+      var st = "", cls = "", title = [];
+      if (b){ var pb = byId(b); cls += " mk"; st += "background:" + catColor(pb) + ";"; title.push(pb.label); }
+      if (u){ var pu = byId(u); cls += " ul"; st += "text-decoration-color:var(--" + KB.cats[pu.cat].color + "S);"; title.push(pu.label); }
+      out += '<span class="'+cls.trim()+'" style="'+st+'" data-p="'+(b||u)+'" title="'+esc(title.join(" + "))+'">'+chunk+'</span>';
+    } else out += chunk;
+    i = j;
+  }
+  return out;
+}
+function pointCard(id, mode, reason){
+  var p = byId(id), st = status(p), list = S.res && S.res.pts[id] ? S.res.pts[id] : [];
+  var h = '<div class="pt'+(S.focus===id?" sel":"")+'" style="--c:var(--'+KB.cats[p.cat].color+'S)" id="pt-'+id+'">';
+  h += '<h4>'+esc(p.label)+'</h4><div class="meta"><span class="badge '+st.cls+'">'+esc(st.label)+'</span>';
+  if (mode === "in") h += '<span class="badge">×'+list.length+'</span>';
+  h += '</div>';
+  if (mode === "in"){ var m0 = list[0].txt; h += '<p class="ex">« '+esc(m0.length > 80 ? m0.slice(0,80) + "…" : m0)+' »</p>'; }
+  else h += '<p class="ex">'+esc(reason)+'</p>';
+  h += '<p class="hint" style="margin:2px 0 0;font-size:.82rem">📘 '+esc(p.prog)+'</p><div class="acts">';
+  if (mode === "in") h += '<button class="btn sm" data-act="focus" data-id="'+id+'">'+(S.focus===id?"Tout afficher":"Voir")+'</button>';
+  h += '<button class="btn sm main" data-act="make" data-id="'+id+'" data-anch="'+(mode==="in"?"texte":"hors")+'">Créer le PRL</button></div></div>';
+  return h;
+}
+function horsList(){
+  var res = S.res, e = eff(), seen = {}, hors = [];
+  res.order.forEach(function(id){ seen[id] = true; });
+  var t = taskById(S.task);
+  if (t){ t.pts.forEach(function(id){ var p = byId(id); if (!seen[id] && p.lvl <= e+1){ seen[id] = true; hors.push({id:id, why:"Utile pour la tâche : " + t.label.toLowerCase()}); } }); }
+  res.order.forEach(function(id){ (byId(id).rel || []).forEach(function(rid){ var rp = byId(rid); if (rp && !seen[rid] && rp.lvl <= e+1 && rp.lvl >= e-2){ seen[rid] = true; hors.push({id:rid, why:"Prolonge « " + byId(id).label + " », présent dans le texte"}); } }); });
+  return hors.slice(0,10);
+}
+function renderResults(){
+  var r = $("results");
+  if (!S.res){
+    r.innerHTML = '<div class="panel empty"><div class="emo">🖍️</div><div class="big">Le texte passe au surligneur</div><p>Choisissez la classe et l\'axe, collez un document, puis lancez le repérage. Les points de langue apparaîtront ici, triés pour votre niveau.</p></div>';
+    return;
+  }
+  var res = S.res, hors = horsList();
+  var h = '<div class="panel"><h2>Le texte surligné</h2><div class="stats"><span class="stat"><b>'+res.total+'</b>formes</span><span class="stat"><b>'+res.order.length+'</b>points</span><span class="stat"><b>'+res.sents+'</b>phrases</span></div>';
+  if (S.focus) h += '<div class="btns" style="margin:0 0 10px"><span class="chip">Seulement : '+esc(byId(S.focus).label)+'</span><button class="btn sm" data-act="focus" data-id="">Tout afficher</button></div>';
+  h += '<div class="scan" id="scanBox">'+scanHtml()+'</div><div class="legend">';
+  Object.keys(KB.cats).forEach(function(k){ h += '<span class="chip"><span class="sw" style="background:var(--'+KB.cats[k].color+'S)"></span>'+esc(KB.cats[k].label)+'</span>'; });
+  h += '</div><p class="hint" style="margin:10px 0 0">Touchez un passage surligné pour voir le point de langue. Souligné en vague : phrases entières (questions, hypothèses, impératif, discours direct). Le repérage est automatique : à vérifier.</p></div>';
+
+  h += '<div class="rtabs" role="tablist"><button role="tab" data-rt="in" aria-selected="'+(S.rtab==="in")+'">Dans le texte ('+res.order.length+')</button><button role="tab" data-rt="out" aria-selected="'+(S.rtab==="out")+'">Hors texte ('+hors.length+')</button></div>';
+  if (S.rtab === "in"){
+    var F = [["all","Tous"],["core","Au cœur du niveau"],["ok","À réactiver"],["up","Production guidée"],["far","À reconnaître"]];
+    h += '<div class="filters">' + F.map(function(f){ return '<button data-rf="'+f[0]+'" aria-pressed="'+(S.rfilter===f[0])+'">'+f[1]+'</button>'; }).join("") + '</div>';
+    var ids = res.order.slice().filter(function(id){ return S.rfilter === "all" || status(byId(id)).cls === S.rfilter; })
+      .sort(function(a,b){ var sa = status(byId(a)), sb = status(byId(b)); return sa.rank - sb.rank || byId(a).lvl - byId(b).lvl; });
+    h += ids.length ? '<div class="pts">' + ids.map(function(id){ return pointCard(id, "in"); }).join("") + '</div>' : '<div class="panel empty"><p>Aucun point dans cette catégorie pour ce niveau.</p></div>';
+  } else {
+    if (!S.task) h += '<p class="hint">Astuce : choisissez une tâche finale pour des suggestions ciblées.</p>';
+    h += hors.length ? '<div class="pts">' + hors.map(function(x){ return pointCard(x.id, "out", x.why); }).join("") + '</div>' : '<div class="panel empty"><p>Pas de suggestion hors texte pour ce niveau. Choisissez une tâche finale.</p></div>';
+  }
+  r.innerHTML = h;
+}
+$("results").addEventListener("click", function(e){
+  var rt = e.target.closest("[data-rt]"); if (rt){ S.rtab = rt.getAttribute("data-rt"); renderResults(); return; }
+  var rf = e.target.closest("[data-rf]"); if (rf){ S.rfilter = rf.getAttribute("data-rf"); renderResults(); return; }
+  var mk = e.target.closest("[data-p]");
+  if (mk && !e.target.closest("button")){ S.focus = mk.getAttribute("data-p"); S.rtab = "in"; S.rfilter = "all"; renderResults(); var c = $("pt-" + S.focus); if (c) c.scrollIntoView({behavior:"smooth", block:"center"}); return; }
+  var b = e.target.closest("button[data-act]"); if (!b) return;
+  var id = b.getAttribute("data-id"), act = b.getAttribute("data-act");
+  if (act === "focus"){ S.focus = (S.focus === id || !id) ? null : id; renderResults(); $("scanBox").scrollIntoView({behavior:"smooth", block:"start"}); }
+  if (act === "make"){ startFromPoint(id, b.getAttribute("data-anch")); }
+});
+/* ---------- PRL generation ---------- */
+function newPRL(){
+  return {id:uid(), created:Date.now(), updated:Date.now(), title:"", level:S.level, profile:S.profile, cecrl:cecrlFor(S.level,S.profile),
+    axe:S.axe || "", objet:"", problematique:"", task:"", activity:ACTIVITIES[0], pointId:"", ancrage:"texte", fn:"", demarche:"inductive",
+    doc:S.docTitle || "", corpus:"", phases:[], trace:"", phono:"", err:"", fr:"", diff:"", evalc:"", spiral:"", prog:"", notes:"", duration:55};
+}
+function corpusFor(id){
+  if (!S.res || !S.res.pts[id]) return "";
+  var t = S.text, sents = sentences(t), list = S.res.pts[id], used = [], lines = [];
+  list.forEach(function(m){
+    var se = sentenceOf(sents, m.s); if (!se || used.indexOf(se) > -1 || lines.length >= 6) return;
+    used.push(se);
+    var ms = list.filter(function(x){ return x.s >= se.s && x.e <= se.e; }), str = "", pos = se.s;
+    ms.forEach(function(x){ if (x.s < pos) return; str += t.slice(pos, x.s) + "[" + t.slice(x.s, x.e) + "]"; pos = x.e; });
+    str += t.slice(pos, se.e);
+    lines.push((lines.length+1) + ". " + str.replace(/\s+/g," ").trim());
+  });
+  return lines.join("\n");
+}
+function bullets(a){ return a.map(function(x){ return "- " + x; }).join("\n"); }
+function phasesFor(dem, p, c){
+  var doc = c.doc ? "« " + c.doc + " »" : "le document étudié";
+  var task = c.task || "la tâche finale de la séquence";
+  var sens = c.ancrage === "texte"
+    ? "Le sens de " + doc + " est déjà construit. On revient au passage qui contient le corpus : rappel oral de la situation (qui ? quoi ? pourquoi ?). Le point de langue n'arrive qu'une fois le sens stabilisé."
+    : "On part d'un besoin de la tâche (" + task + ") ou d'un court document authentique complémentaire qui contient la forme. Le corpus est constitué à partir de ce support.";
+  var reemploi = "Les élèves mobilisent la forme pour " + p.fn + ", dans le cadre de : " + task + ". Consigne courte, critère de réussite explicite (« j'utilise la forme au moins deux fois et je vérifie avec la trace écrite »).";
+  var concept = "Questions guides (les élèves formulent, le professeur reformule) :\n" + bullets(p.concept);
+  var train = bullets(p.train);
+  var P = {
+    inductive:[
+      ["Retour au sens", 5, "Classe entière", sens],
+      ["Repérage", 5, "Binômes", p.rep],
+      ["Observation et classement", 10, "Groupes", p.obs + "\nSupport : le corpus ci-dessus, projeté et distribué."],
+      ["Hypothèses et conceptualisation", 8, "Classe entière", concept],
+      ["Trace écrite co-construite", 5, "Classe entière", p.trace + "\nLa trace reprend les mots des élèves et un exemple du corpus."],
+      ["Entraînement contextualisé", 10, "Individuel", train],
+      ["Réemploi au service de la tâche", 12, "Binômes", reemploi]
+    ],
+    tblt:[
+      ["Pré-tâche", 5, "Classe entière", "Activation du lexique et présentation de la tâche (" + task + "). Écoute ou lecture d'un modèle si besoin."],
+      ["Tâche, premier jet", 10, "Binômes", "Les élèves réalisent la tâche en se concentrant sur le sens, sans consigne sur la forme. Le professeur circule et note les besoins (formes évitées, erreurs récurrentes)."],
+      ["Mise en commun des besoins", 5, "Classe entière", "Quelques productions sont partagées. On identifie ensemble ce qui a manqué pour " + p.fn + "."],
+      ["Focus on form", 10, "Groupes", p.rep + "\n" + concept],
+      ["Pratique ciblée", 8, "Individuel", train],
+      ["Reprise de la tâche", 12, "Binômes", "Les élèves refont la tâche en intégrant la forme travaillée. Comparaison premier jet / second jet."],
+      ["Bilan métacognitif", 5, "Classe entière", "Qu'avez-vous amélioré entre les deux versions ? Trace écrite : " + p.trace]
+    ],
+    erreurs:[
+      ["Collecte des erreurs", 5, "Classe entière", "Extraits anonymisés de productions d'élèves contenant la forme (erreurs prévisibles : " + p.err.join(" ; ") + ")."],
+      ["Classement", 10, "Groupes", "Les élèves classent les énoncés : correct / à corriger, puis par type d'erreur. Codes de correction de la classe si vous en utilisez."],
+      ["Hypothèses sur la règle", 10, "Groupes", concept],
+      ["Règle reformulée", 5, "Classe entière", p.trace],
+      ["Correction collaborative et réécriture", 15, "Binômes", "Chaque binôme corrige et justifie ses corrections avec la règle. Réécriture d'un passage de sa propre production."],
+      ["Vérification", 10, "Individuel", train]
+    ],
+    contraste:[
+      ["Corpus bilingue", 5, "Classe entière", "Énoncés du corpus mis en regard de leur traduction française (et d'autres langues de la classe si possible)."],
+      ["Comparaison", 10, "Groupes", p.obs + "\nRegard croisé : " + p.fr],
+      ["Hypothèses", 10, "Groupes", concept],
+      ["Formulation de la règle", 5, "Classe entière", p.trace],
+      ["Entraînement", 10, "Individuel", train + "\n- Traduction-médiation : expliquer à un camarade francophone pourquoi la forme diffère."],
+      ["Réemploi au service de la tâche", 15, "Binômes", reemploi]
+    ],
+    explicite:[
+      ["Mise en situation", 5, "Classe entière", sens],
+      ["Présentation explicite et brève", 5, "Classe entière", p.trace + "\nAppui sur deux énoncés du corpus."],
+      ["Questions de vérification du concept", 5, "Classe entière", concept],
+      ["Entraînement guidé puis autonome", 15, "Individuel", train],
+      ["Réemploi au service de la tâche", 20, "Binômes", reemploi],
+      ["Retour réflexif", 5, "Classe entière", "Ce que je sais faire maintenant, ce qui reste difficile (auto-évaluation rapide)."]
+    ]
+  };
+  return (P[dem] || P.inductive).map(function(x){ return {t:x[0], d:x[1], mod:x[2], c:x[3]}; });
+}
+function spiralFor(p){
+  var before = [], after = [];
+  (p.rel || []).forEach(function(id){ var r = byId(id); if (!r) return; if (r.lvl < p.lvl) before.push(r.label); else after.push(r.label); });
+  KB.points.forEach(function(r){ if (r.cat === p.cat && r.lvl < p.lvl && r.lvl >= p.lvl - 2 && before.indexOf(r.label) < 0 && before.length < 3 && r.id !== p.id) before.push(r.label); });
+  return (before.length ? "À réactiver avant : " + before.join(", ") + ".\n" : "") + (after.length ? "Prolongements possibles : " + after.join(", ") + ".\n" : "") + "Revenir sur la forme dans au moins deux autres séances de la séquence, avec des supports différents (approche spiralaire).";
+}
+function generate(prl){
+  var p = byId(prl.pointId); if (!p) return prl;
+  var task = taskById(S.task);
+  prl.fn = p.fn;
+  if (!prl.title) prl.title = p.label + " · " + LEVELS[prl.level];
+  if (!prl.task && task) prl.task = task.label;
+  prl.corpus = prl.ancrage === "texte" ? corpusFor(p.id) : "";
+  if (!prl.corpus) prl.corpus = "Corpus à constituer : 4 à 6 énoncés authentiques (document complémentaire de la séquence, extrait court, productions d'élèves) contenant la forme « " + p.label + " ». Placer la forme entre crochets.";
+  prl.phases = phasesFor(prl.demarche, p, {doc:prl.doc, task:prl.task, ancrage:prl.ancrage});
+  prl.prog = p.prog; prl.trace = p.trace; prl.phono = p.phono; prl.err = bullets(p.err); prl.fr = p.fr;
+  prl.diff = "Soutien : corpus réduit à trois énoncés, formes déjà surlignées, tableau de classement à compléter, aide-mémoire visuel.\nStandard : corpus complet, classement libre puis mise en commun.\nApprofondissement : chercher un contre-exemple, formuler la règle avec ses limites, produire un énoncé plus complexe pour la tâche.\nAccessibilité : police adaptée, énoncés aérés, couleur constante pour la forme travaillée.";
+  prl.evalc = "Critère observable dans la tâche finale : « " + p.label + " » est employé à bon escient pour " + p.fn + ".\nIndicateurs de réussite co-construits avec les élèves.\nTicket de sortie : deux ou trois énoncés à produire ou corriger.\nRéintroduire la forme dans une évaluation ultérieure (spiralaire).";
+  prl.spiral = spiralFor(p);
+  return prl;
+}
+function startFromPoint(id, anch){
+  var go = function(){
+    var prl = newPRL(); prl.pointId = id; prl.ancrage = anch || "texte"; prl.doc = S.docTitle || "";
+    var t = taskById(S.task); if (t) prl.task = t.label;
+    S.cur = generate(prl); S.acc = "corpus"; S.phOpen = -1; lsSet(LS.draft, S.cur); setView("build"); toast("PRL généré : à vous de l'ajuster");
+  };
+  if (S.cur && S.cur.pointId && !isSaved(S.cur)) confirmBox("Remplacer le brouillon ?", "Le PRL en cours n'est pas enregistré dans votre banque.", "Remplacer", go);
+  else go();
+}
+function isSaved(prl){ for (var i=0;i<S.bank.length;i++){ if (S.bank[i].id === prl.id && S.bank[i].updated === prl.updated) return true; } return false; }
+
+
+/* ---------- builder ---------- */
+var SECTIONS = [
+  {id:"cadre", t:"Cadre de la séquence"},
+  {id:"point", t:"Point de langue et démarche"},
+  {id:"corpus", t:"Document et corpus"},
+  {id:"deroule", t:"Déroulé de la séance"},
+  {id:"ress", t:"Ressources didactiques"}
+];
+function opt(v, label, cur){ return '<option value="'+esc(v)+'"'+(String(v)===String(cur)?" selected":"")+'>'+esc(label)+'</option>'; }
+function fld(label, key, type, ph, extra){
+  var v = S.cur[key] == null ? "" : S.cur[key];
+  if (type === "ta") return '<label class="f" for="f-'+key+'">'+esc(label)+'</label><textarea class="in" id="f-'+key+'" data-k="'+key+'" placeholder="'+esc(ph||"")+'"'+(extra||"")+'>'+esc(v)+'</textarea>';
+  return '<label class="f" for="f-'+key+'">'+esc(label)+'</label><input class="in" id="f-'+key+'" data-k="'+key+'" value="'+esc(v)+'" placeholder="'+esc(ph||"")+'"'+(extra||"")+'>';
+}
+function statusFor(p, c){ TARGET = ciOf(c.cecrl || cecrlFor(parseInt(c.level,10), c.profile)); var st = status(p); TARGET = null; return st; }
+function secOk(id){
+  var c = S.cur;
+  if (id === "cadre") return !!(c.title && c.axe);
+  if (id === "point") return !!c.pointId;
+  if (id === "corpus") return !!c.corpus;
+  if (id === "deroule") return c.phases.length > 0;
+  return !!c.trace;
+}
+function secSummary(id){
+  var c = S.cur, p = byId(c.pointId);
+  if (id === "cadre") return [LEVELS[c.level] + " " + c.profile, c.cecrl, c.axe || "axe à choisir"].join(" · ");
+  if (id === "point") return p ? p.label + " · " + (c.ancrage === "texte" ? "dans le texte" : "hors texte") : "À choisir";
+  if (id === "corpus") return c.doc || (c.corpus ? "Corpus prêt" : "À compléter");
+  if (id === "deroule") return c.phases.length ? c.phases.length + " phases · " + totalOf(c) + " min" : "Aucune phase";
+  return c.trace ? "Trace écrite, phonologie, différenciation, évaluation" : "Générées avec le déroulé";
+}
+function secBody(id){
+  var c = S.cur, p = byId(c.pointId), h = "";
+  if (id === "cadre"){
+    h += fld("Titre du PRL", "title", "in", "Ex. : Raconter un mythe au prétérit");
+    h += '<div class="row"><div><label class="f" for="f-level">Classe</label><select class="in" id="f-level" data-k="level" data-num="1">' + LEVELS.map(function(l,i){ return opt(i, l, c.level); }).join("") + '</select></div>';
+    h += '<div><label class="f" for="f-profile">Langue</label><select class="in" id="f-profile" data-k="profile">' + (parseInt(c.level,10) >= 4 ? PROFILES : ["LVA","LVB"]).map(function(l){ return opt(l, l, c.profile); }).join("") + '</select></div>';
+    h += '<div>' + fld("CECRL visé", "cecrl", "in", "A2") + '</div></div>';
+    h += '<label class="f" for="bAxe">Axe du programme (' + LEVELS[c.level] + ')</label>' + axeSelect(parseInt(c.level,10), c.axe, "bAxe");
+    h += '<label class="f" for="bObj">Objet d\'étude</label>' + objetSelect(parseInt(c.level,10), c.axe, c.objet, "bObj");
+    h += fld("Problématique", "problematique", "in", "");
+    h += fld("Tâche finale ou projet", "task", "in", "Ex. : enregistrer un podcast");
+    h += '<label class="f" for="f-activity">Activité langagière dominante</label><select class="in" id="f-activity" data-k="activity">' + ACTIVITIES.map(function(a){ return opt(a,a,c.activity); }).join("") + '</select>';
+  }
+  if (id === "point"){
+    var ptOpts = '<option value="">— Choisir un point de langue —</option>';
+    Object.keys(KB.cats).forEach(function(k){
+      ptOpts += '<optgroup label="'+esc(KB.cats[k].label)+'">';
+      KB.points.filter(function(x){ return x.cat === k; }).sort(function(a,b){ return a.lvl - b.lvl; }).forEach(function(x){ ptOpts += opt(x.id, x.label + " (" + x.cecrl + ")", c.pointId); });
+      ptOpts += '</optgroup>';
+    });
+    h += '<label class="f" for="f-pointId">Fait de langue</label><select class="in" id="f-pointId" data-k="pointId">' + ptOpts + '</select>';
+    if (p){ var st = statusFor(p, c); h += '<div class="meta" style="margin-top:8px"><span class="badge '+st.cls+'">'+esc(st.label)+'</span><span class="badge">'+esc(KB.cats[p.cat].label)+'</span></div><p class="hint" style="margin:8px 0 0">📘 Au programme : '+esc(p.prog)+'</p>'; }
+    h += '<label class="f">Ancrage</label><div class="seg" id="anchSeg"><button type="button" data-a="texte" aria-pressed="'+(c.ancrage==="texte")+'">Dans le texte</button><button type="button" data-a="hors" aria-pressed="'+(c.ancrage==="hors")+'">Hors texte</button></div>';
+    h += fld("La forme sert à… (acte langagier)", "fn", "in", "");
+    h += '<label class="f" for="f-demarche">Démarche</label><select class="in" id="f-demarche" data-k="demarche">' + DEMARCHES.map(function(d){ return opt(d.id, d.label, c.demarche); }).join("") + '</select>';
+    h += '<div class="btns"><button class="btn hot wide" id="bGen" type="button"'+(p?"":" disabled")+'>✨ Générer corpus, déroulé et ressources</button></div><p class="hint" style="margin-top:8px">Tout reste modifiable ensuite.</p>';
+  }
+  if (id === "corpus"){
+    h += fld("Document support (titre, auteur, source)", "doc", "in", "Document authentique de la séquence");
+    h += fld("Corpus (formes entre crochets)", "corpus", "ta", "1. …", ' style="min-height:170px"');
+  }
+  if (id === "deroule"){
+    h += '<div class="dur"><span>Durée totale : <span class="total" id="totalIn">'+totalOf(c)+' min</span></span><span class="hint" style="margin:0">Repère : séance de 55 min</span></div><div id="phList"></div>';
+    h += '<div class="btns"><button class="btn" id="bAddPh" type="button">＋ Ajouter une phase</button></div>';
+  }
+  if (id === "ress"){
+    h += fld("Repères du programme (BO 2025)", "prog", "ta", "");
+    h += fld("Trace écrite", "trace", "ta", "");
+    h += fld("Phonologie associée", "phono", "ta", "");
+    h += fld("Erreurs prévisibles", "err", "ta", "");
+    h += fld("Regard croisé : français et autres langues", "fr", "ta", "");
+    h += fld("Différenciation", "diff", "ta", "");
+    h += fld("Évaluation", "evalc", "ta", "");
+    h += fld("Progression spiralaire", "spiral", "ta", "");
+    h += fld("Notes personnelles", "notes", "ta", "");
+  }
+  var idx = 0; SECTIONS.forEach(function(s, i){ if (s.id === id) idx = i; });
+  if (idx < SECTIONS.length - 1) h += '<div class="next"><button class="btn main" data-next="'+SECTIONS[idx+1].id+'" type="button">Étape suivante</button></div>';
+  else h += '<div class="next"><button class="btn main" data-save="1" type="button">Enregistrer le PRL</button></div>';
+  return h;
+}
+function renderBuild(){
+  var b = $("buildBody");
+  if (!S.cur){
+    b.innerHTML = '<div class="panel empty"><div class="emo">🧪</div><div class="big">Aucun PRL en cours</div><p>Partez d\'un texte dans l\'onglet Analyser, ou commencez un PRL vierge.</p><div class="btns" style="justify-content:center"><button class="btn main" id="bNew" type="button">Nouveau PRL vierge</button><button class="btn" id="bGoAn" type="button">Analyser un texte</button></div></div>';
+    $("bNew").onclick = function(){ S.cur = newPRL(); S.acc = "cadre"; lsSet(LS.draft, S.cur); renderBuild(); updateActionBar(); };
+    $("bGoAn").onclick = function(){ setView("analyse"); };
+    updateActionBar();
+    return;
+  }
+  var h = '<div class="progress">' + SECTIONS.map(function(s){ return '<span class="'+(s.id===S.acc?"cur":secOk(s.id)?"done":"")+'"></span>'; }).join("") + '</div>';
+  h += SECTIONS.map(function(s, i){
+    var open = S.acc === s.id, ok = secOk(s.id);
+    return '<div class="acc'+(open?" open":"")+(ok&&!open?" ok":"")+'" id="acc-'+s.id+'"><button class="acc-h" type="button" data-acc="'+s.id+'" aria-expanded="'+open+'"><span class="acc-n">'+(ok&&!open?"✓":(i+1))+'</span><span class="acc-t"><strong>'+esc(s.t)+'</strong><small>'+esc(secSummary(s.id))+'</small></span><span class="acc-arrow">▾</span></button><div class="acc-b">'+(open?secBody(s.id):"")+'</div></div>';
+  }).join("");
+  b.innerHTML = h;
+  if (S.acc === "deroule") renderPhases();
+  bindBuild();
+  updateActionBar();
+}
+function bindBuild(){
+  var g = $("bGen");
+  if (g) g.onclick = function(){
+    if (!byId(S.cur.pointId)) return;
+    var go = function(){ generate(S.cur); touch(); S.acc = "corpus"; renderBuild(); toast("Corpus, déroulé et ressources générés"); };
+    if (S.cur.phases.length) confirmBox("Régénérer ?", "Le corpus, les phases et les ressources didactiques seront remplacés. Le cadre est conservé.", "Régénérer", go); else go();
+  };
+  var ad = $("bAddPh");
+  if (ad) ad.onclick = function(){ S.cur.phases.push({t:"Nouvelle phase", d:5, mod:MODS[0], c:""}); S.phOpen = S.cur.phases.length - 1; touch(); renderPhases(); };
+  var an = $("anchSeg");
+  if (an) an.onclick = function(e){ var bt = e.target.closest("button"); if (!bt) return; S.cur.ancrage = bt.getAttribute("data-a"); touch(); renderBuild(); };
+}
+function openSection(id){ S.acc = id; renderBuild(); var el = $("acc-" + id); if (el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
+function phHeadInner(ph, i){ return '<span class="ph-num">'+(i+1)+'</span><span class="ph-tt">'+esc(ph.t)+'<small>'+esc(ph.mod)+'</small></span><span class="ph-min">'+esc(ph.d)+' min</span>'; }
+function renderPhases(){
+  var c = S.cur, el = $("phList"); if (!el) return;
+  if (!c.phases.length){ el.innerHTML = '<div class="empty"><p>Aucune phase. Générez le déroulé à l\'étape 2 ou ajoutez vos phases.</p></div>'; updateTotal(); return; }
+  el.innerHTML = c.phases.map(function(ph, i){
+    var open = S.phOpen === i;
+    return '<div class="ph'+(open?" open":"")+'" data-i="'+i+'"><button class="ph-h" type="button" data-phtoggle="1" aria-expanded="'+open+'">'+phHeadInner(ph,i)+'</button><div class="ph-b"><div class="ph-grid"><input class="in" data-pk="t" value="'+esc(ph.t)+'" aria-label="Titre de la phase"><input class="in" type="number" min="0" max="120" inputmode="numeric" data-pk="d" value="'+esc(ph.d)+'" aria-label="Durée en minutes"><select class="in" data-pk="mod" aria-label="Modalité">' + MODS.map(function(m){ return opt(m,m,ph.mod); }).join("") + '</select></div><textarea class="in" data-pk="c" aria-label="Contenu de la phase">'+esc(ph.c)+'</textarea><div class="ph-tools"><button class="btn sm" data-ph="up" type="button">↑ Monter</button><button class="btn sm" data-ph="down" type="button">↓ Descendre</button><button class="btn sm ghost" data-ph="del" type="button">Supprimer</button></div></div></div>';
+  }).join("");
+  updateTotal();
+}
+function updateTotal(){
+  if (!S.cur) return;
+  var tot = totalOf(S.cur), over = tot > 55, a = $("totalIn"), b = $("totalBar");
+  if (a){ a.textContent = tot + " min"; a.className = "total" + (over ? " over" : ""); }
+  if (b) b.textContent = tot + " min" + (over ? " · à répartir sur 2 séances" : "");
+}
+function updateActionBar(){
+  var on = S.view === "build" && !!S.cur;
+  $("actionbar").className = "actionbar" + (on ? " on" : "");
+  if (on){ $("abTitle").textContent = S.cur.title || "PRL sans titre"; updateTotal(); }
+}
+var saveT = null;
+function touch(){ S.cur.updated = Date.now(); clearTimeout(saveT); saveT = setTimeout(function(){ lsSet(LS.draft, S.cur); }, 300); }
+function onField(el){
+  if (el.getAttribute("data-axe")){
+    var o = $(el.id + "Other");
+    var prevAxe = S.cur.axe;
+    if (el.value === "__other"){ o.className = "in"; o.focus(); S.cur.axe = o.value; } else { o.className = "in hide"; S.cur.axe = el.value; }
+    if (prevAxe !== S.cur.axe && S.cur.objet && axeObj(parseInt(S.cur.level,10), prevAxe) && axeObj(parseInt(S.cur.level,10), prevAxe).o.indexOf(S.cur.objet) > -1) S.cur.objet = "";
+    touch(); if (el.value !== "__other") renderBuild(); return;
+  }
+  if (el.getAttribute("data-axe-other")){ S.cur.axe = el.value; touch(); return; }
+  if (el.getAttribute("data-obj")){
+    var ob = $(el.id + "Other");
+    if (el.value === "__other"){ ob.className = "in"; ob.focus(); S.cur.objet = ob.value; } else { ob.className = "in hide"; S.cur.objet = el.value; }
+    touch(); return;
+  }
+  if (el.getAttribute("data-obj-other")){ S.cur.objet = el.value; touch(); return; }
+  if (el.getAttribute("data-k")){
+    var k = el.getAttribute("data-k"), v = el.value;
+    if (el.getAttribute("data-num")) v = parseInt(v,10);
+    if (S.cur[k] === v) return;
+    S.cur[k] = v; touch();
+    if (k === "title") $("abTitle").textContent = v || "PRL sans titre";
+    if (k === "level" || k === "profile"){
+      if (k === "level" && S.cur.level < 4 && S.cur.profile === "LVC") S.cur.profile = "LVA";
+      if (k === "level" && !axeKnown(S.cur.level, S.cur.axe)){ S.cur.axe = ""; S.cur.objet = ""; }
+      S.cur.cecrl = cecrlFor(parseInt(S.cur.level,10), S.cur.profile); renderBuild();
+    }
+    if (k === "pointId"){ var p = byId(v); if (p) S.cur.fn = p.fn; renderBuild(); }
+    return;
+  }
+  var pk = el.getAttribute("data-pk");
+  if (pk){
+    var box = el.closest(".ph"), i = parseInt(box.getAttribute("data-i"),10);
+    S.cur.phases[i][pk] = pk === "d" ? (parseInt(el.value,10) || 0) : el.value; touch();
+    if (pk !== "c") box.querySelector(".ph-h").innerHTML = phHeadInner(S.cur.phases[i], i);
+    if (pk === "d") updateTotal();
+  }
+}
+$("buildBody").addEventListener("input", function(e){ if (e.target.tagName !== "SELECT") onField(e.target); });
+$("buildBody").addEventListener("change", function(e){ if (e.target.tagName === "SELECT") onField(e.target); });
+$("buildBody").addEventListener("click", function(e){
+  var ac = e.target.closest("[data-acc]"); if (ac){ var id = ac.getAttribute("data-acc"); if (S.acc === id){ S.acc = ""; renderBuild(); } else openSection(id); return; }
+  var nx = e.target.closest("[data-next]"); if (nx){ openSection(nx.getAttribute("data-next")); return; }
+  if (e.target.closest("[data-save]")){ savePRL(); return; }
+  var tg = e.target.closest("[data-phtoggle]"); if (tg){ var ii = parseInt(tg.closest(".ph").getAttribute("data-i"),10); S.phOpen = S.phOpen === ii ? -1 : ii; renderPhases(); return; }
+  var b = e.target.closest("button[data-ph]"); if (!b) return;
+  var i = parseInt(b.closest(".ph").getAttribute("data-i"),10), a = b.getAttribute("data-ph"), ph = S.cur.phases;
+  if (a === "up" && i > 0){ var t = ph[i-1]; ph[i-1] = ph[i]; ph[i] = t; S.phOpen = i-1; }
+  if (a === "down" && i < ph.length-1){ var t2 = ph[i+1]; ph[i+1] = ph[i]; ph[i] = t2; S.phOpen = i+1; }
+  if (a === "del"){ confirmBox("Supprimer cette phase ?", "« " + ph[i].t + " » sera retirée du déroulé.", "Supprimer", function(){ ph.splice(i,1); S.phOpen = -1; touch(); renderPhases(); }); return; }
+  touch(); renderPhases();
+});
+function savePRL(){
+  if (!S.cur){ toast("Aucun PRL à enregistrer"); return; }
+  if (!S.cur.title){ S.cur.title = (byId(S.cur.pointId) ? byId(S.cur.pointId).label : "PRL sans titre") + " · " + LEVELS[S.cur.level]; }
+  S.cur.updated = Date.now();
+  var found = false;
+  for (var i=0;i<S.bank.length;i++){ if (S.bank[i].id === S.cur.id){ S.bank[i] = clone(S.cur); found = true; } }
+  if (!found) S.bank.unshift(clone(S.cur));
+  if (lsSet(LS.bank, S.bank)){ lsSet(LS.draft, S.cur); updateBankCount(); renderBuild(); toast("PRL enregistré dans votre banque"); }
+}
+$("bSave").addEventListener("click", savePRL);
+$("bExport").addEventListener("click", function(){ if (S.cur) exportMenu(S.cur); });
+$("bMore").addEventListener("click", function(){
+  openModal('<h3>Ce PRL</h3><div class="menu"><button class="btn" data-m="new">Commencer un nouveau PRL</button><button class="btn" data-m="dup">Dupliquer ce PRL</button><button class="btn" data-m="bank">Voir ma banque</button></div><div class="btns"><button class="btn ghost" data-m="close">Fermer</button></div>');
+  $("modalBody").onclick = function(e){
+    var b = e.target.closest("[data-m]"); if (!b) return; var m = b.getAttribute("data-m"); closeModal();
+    if (m === "new"){ var go = function(){ S.cur = newPRL(); S.acc = "cadre"; lsSet(LS.draft, S.cur); renderBuild(); toast("Nouveau PRL vierge"); }; if (!isSaved(S.cur) && (S.cur.pointId || S.cur.title)) confirmBox("Commencer un nouveau PRL ?", "Le PRL en cours n'est pas enregistré dans votre banque.", "Commencer", go); else go(); }
+    if (m === "dup"){ var d = clone(S.cur); d.id = uid(); d.title = (S.cur.title || "PRL") + " (copie)"; d.created = d.updated = Date.now(); S.cur = d; lsSet(LS.draft, S.cur); renderBuild(); toast("Copie créée : pensez à l'enregistrer"); }
+    if (m === "bank") setView("bank");
+  };
+});
+/* ---------- export ---------- */
+function download(name, mime, content){
+  try{
+    var blob = new Blob([content], {type:mime}), url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 800);
+    toast("Fichier exporté : " + name);
+  }catch(e){ toast("Export impossible sur ce navigateur"); }
+}
+function slug(s){ return (s || "prl").toLowerCase().replace(/[àâä]/g,"a").replace(/[éèêë]/g,"e").replace(/[îï]/g,"i").replace(/[ôö]/g,"o").replace(/[ùûü]/g,"u").replace(/ç/g,"c").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60) || "prl"; }
+function totalOf(prl){ var t = 0; prl.phases.forEach(function(p){ t += parseInt(p.d,10) || 0; }); return t; }
+function pLabel(prl){ var p = byId(prl.pointId); return p ? p.label : "—"; }
+function toMarkdown(prl){
+  var L = [];
+  L.push("# " + (prl.title || "PRL"));
+  L.push("");
+  L.push("**Classe :** " + LEVELS[prl.level] + " " + prl.profile + " · **CECRL :** " + (prl.cecrl||"—"));
+  L.push("**Axe :** " + (prl.axe||"—") + "  ");
+  L.push("**Objet d'étude :** " + (prl.objet||"—") + "  ");
+  L.push("**Problématique :** " + (prl.problematique||"—") + "  ");
+  L.push("**Tâche finale :** " + (prl.task||"—") + "  ");
+  L.push("**Activité langagière dominante :** " + (prl.activity||"—"));
+  L.push("");
+  L.push("## Point de langue");
+  L.push("**" + pLabel(prl) + "** (" + (prl.ancrage === "texte" ? "dans le texte" : "hors texte") + ")  ");
+  L.push("La forme sert à : " + (prl.fn||"—") + "  ");
+  L.push("Démarche : " + (DEMARCHES.filter(function(d){ return d.id === prl.demarche; })[0] || DEMARCHES[0]).label);
+  L.push("");
+  L.push("## Document et corpus");
+  L.push("Document : " + (prl.doc||"—"));
+  L.push("");
+  L.push(prl.corpus || "");
+  L.push("");
+  L.push("## Déroulé (" + totalOf(prl) + " min)");
+  prl.phases.forEach(function(p, i){ L.push(""); L.push("### " + (i+1) + ". " + p.t + " — " + p.d + " min, " + p.mod); L.push(p.c || ""); });
+  [["Repères du programme","prog"],["Trace écrite","trace"],["Phonologie","phono"],["Erreurs prévisibles","err"],["Regard croisé","fr"],["Différenciation","diff"],["Évaluation","evalc"],["Progression spiralaire","spiral"],["Notes","notes"]].forEach(function(x){ if (prl[x[1]]){ L.push(""); L.push("## " + x[0]); L.push(prl[x[1]]); } });
+  L.push(""); L.push("_Créé avec PRL Lab — BROT2YOU_");
+  return L.join("\n");
+}
+function nl(s){ return esc(s).replace(/\n/g,"<br>"); }
+function toHtmlDoc(prl, forPrint){
+  var h = '<h1>'+esc(prl.title||"PRL")+'</h1>';
+  h += '<table><tr><th>Classe</th><td>'+esc(LEVELS[prl.level]+" "+prl.profile)+'</td><th>CECRL</th><td>'+esc(prl.cecrl||"—")+'</td></tr>';
+  h += '<tr><th>Axe</th><td colspan="3">'+esc(prl.axe||"—")+'</td></tr><tr><th>Objet d\'étude</th><td colspan="3">'+esc(prl.objet||"—")+'</td></tr>';
+  h += '<tr><th>Problématique</th><td colspan="3">'+esc(prl.problematique||"—")+'</td></tr><tr><th>Tâche finale</th><td colspan="3">'+esc(prl.task||"—")+'</td></tr>';
+  h += '<tr><th>Point de langue</th><td colspan="3"><b>'+esc(pLabel(prl))+'</b> ('+(prl.ancrage==="texte"?"dans le texte":"hors texte")+') — sert à : '+esc(prl.fn||"—")+'</td></tr>';
+  h += '<tr><th>Démarche</th><td>'+esc((DEMARCHES.filter(function(d){ return d.id === prl.demarche; })[0]||DEMARCHES[0]).label)+'</td><th>Activité</th><td>'+esc(prl.activity||"")+'</td></tr></table>';
+  h += '<h2>Document et corpus</h2><p><b>'+esc(prl.doc||"—")+'</b></p><p>'+nl(prl.corpus)+'</p>';
+  h += '<h2>Déroulé ('+totalOf(prl)+' min)</h2><table><tr><th>#</th><th>Phase</th><th>Durée</th><th>Modalité</th><th>Contenu</th></tr>';
+  prl.phases.forEach(function(p,i){ h += '<tr><td>'+(i+1)+'</td><td>'+esc(p.t)+'</td><td>'+esc(p.d)+' min</td><td>'+esc(p.mod)+'</td><td>'+nl(p.c)+'</td></tr>'; });
+  h += '</table>';
+  [["Repères du programme","prog"],["Trace écrite","trace"],["Phonologie","phono"],["Erreurs prévisibles","err"],["Regard croisé","fr"],["Différenciation","diff"],["Évaluation","evalc"],["Progression spiralaire","spiral"],["Notes","notes"]].forEach(function(x){ if (prl[x[1]]) h += '<h2>'+x[0]+'</h2><p>'+nl(prl[x[1]])+'</p>'; });
+  h += '<p style="margin-top:18pt;font-size:9pt;color:#555">Créé avec PRL Lab — BROT2YOU</p>';
+  if (forPrint) return h;
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+esc(prl.title)+'</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.4}h1{font-size:18pt}h2{font-size:13pt;border-bottom:1px solid #333;margin-top:14pt}table{border-collapse:collapse;width:100%}td,th{border:1px solid #666;padding:4pt 6pt;vertical-align:top;text-align:left}th{background:#EEF0FF}</style></head><body>'+h+'</body></html>';
+}
+function packJSON(items){ return JSON.stringify({app:"PRL Lab", format:1, exported:new Date().toISOString(), items:items}, null, 2); }
+function exportMenu(prl){
+  openModal('<h3>Exporter « '+esc(prl.title||"PRL")+' »</h3><p class="hint">Word et Markdown pour retravailler, PDF pour imprimer, JSON pour partager avec un collègue qui utilise PRL Lab.</p><div class="menu"><button class="btn" data-x="pdf">Imprimer ou enregistrer en PDF</button><button class="btn" data-x="doc">Document Word (.doc)</button><button class="btn" data-x="md">Markdown (.md)</button><button class="btn" data-x="copy">Copier le texte</button><button class="btn" data-x="json">Fichier de partage (.json)</button></div><div class="btns"><button class="btn ghost" data-x="close">Fermer</button></div>');
+  $("modalBody").onclick = function(e){
+    var b = e.target.closest("button[data-x]"); if (!b) return;
+    var x = b.getAttribute("data-x"), name = slug(prl.title);
+    if (x === "close"){ closeModal(); return; }
+    if (x === "pdf"){ closeModal(); $("printArea").innerHTML = toHtmlDoc(prl, true); setTimeout(function(){ window.print(); }, 150); return; }
+    if (x === "doc") download(name + ".doc", "application/msword", "\ufeff" + toHtmlDoc(prl, false));
+    if (x === "md") download(name + ".md", "text/markdown;charset=utf-8", toMarkdown(prl));
+    if (x === "json") download(name + ".json", "application/json", packJSON([prl]));
+    if (x === "copy") copyText(toMarkdown(prl));
+    closeModal();
+  };
+}
+function copyText(t){
+  if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){ toast("Texte copié"); }, function(){ fallbackCopy(t); }); }
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){ var ta = document.createElement("textarea"); ta.value = t; ta.setAttribute("readonly",""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, t.length); try{ document.execCommand("copy"); toast("Texte copié"); }catch(e){ toast("Copie impossible"); } document.body.removeChild(ta); }
+
+/* ---------- bank ---------- */
+var bankFilter = {q:"", lvl:""};
+function renderBank(){
+  updateBankCount();
+  var items = S.bank.filter(function(x){
+    if (bankFilter.lvl !== "" && String(x.level) !== bankFilter.lvl) return false;
+    if (bankFilter.q){ var q = bankFilter.q.toLowerCase(); return (x.title + " " + pLabel(x) + " " + x.axe + " " + x.doc).toLowerCase().indexOf(q) > -1; }
+    return true;
+  });
+  var h = "";
+  if (!S.bank.length) h = '<div class="panel empty"><div class="big">Votre banque est vide</div><p>Enregistrez un PRL depuis l\'onglet Construire, ou importez le fichier .json d\'un collègue.</p></div>';
+  else if (!items.length) h = '<div class="panel empty"><p>Aucun PRL ne correspond à ce filtre.</p></div>';
+  else h = '<div class="bank">' + items.map(function(x){
+    return '<div class="card"><h4>'+esc(x.title||"PRL sans titre")+'</h4><div class="sub">'+esc(LEVELS[x.level]+" "+x.profile+" · "+(x.cecrl||""))+'</div><div><span class="anch '+(x.ancrage==="texte"?"in-t":"out-t")+'">'+(x.ancrage==="texte"?"Dans le texte":"Hors texte")+'</span> <span class="sub">'+esc(pLabel(x))+'</span></div><div class="sub">'+esc(x.phases.length+" phases · "+totalOf(x)+" min · modifié le "+fmtDate(x.updated))+'</div><div class="acts"><button class="btn sm main" data-b="open" data-id="'+x.id+'">Ouvrir</button><button class="btn sm" data-b="dup" data-id="'+x.id+'">Dupliquer</button><button class="btn sm" data-b="exp" data-id="'+x.id+'">Exporter</button><button class="btn sm" data-b="del" data-id="'+x.id+'">Supprimer</button></div></div>';
+  }).join("") + '</div>';
+  $("bankList").innerHTML = h;
+}
+function bankIdx(id){ for (var i=0;i<S.bank.length;i++){ if (S.bank[i].id === id) return i; } return -1; }
+$("bankList").addEventListener("click", function(e){
+  var b = e.target.closest("button[data-b]"); if (!b) return;
+  var i = bankIdx(b.getAttribute("data-id")); if (i < 0) return;
+  var a = b.getAttribute("data-b"), it = S.bank[i];
+  if (a === "open"){ var go = function(){ S.acc = "cadre"; S.phOpen = -1; S.cur = clone(it); lsSet(LS.draft, S.cur); setView("build"); }; if (S.cur && S.cur.id !== it.id && !isSaved(S.cur) && S.cur.pointId) confirmBox("Ouvrir ce PRL ?", "Le PRL en cours n'est pas enregistré.", "Ouvrir", go); else go(); }
+  if (a === "dup"){ var d = clone(it); d.id = uid(); d.title = it.title + " (copie)"; d.created = d.updated = Date.now(); S.bank.unshift(d); lsSet(LS.bank, S.bank); renderBank(); toast("PRL dupliqué"); }
+  if (a === "exp") exportMenu(it);
+  if (a === "del") confirmBox("Supprimer ce PRL ?", "« " + it.title + " » sera retiré de votre banque. Pensez à l'exporter avant si besoin.", "Supprimer", function(){ S.bank.splice(i,1); lsSet(LS.bank, S.bank); renderBank(); toast("PRL supprimé"); });
+});
+$("bankQ").addEventListener("input", function(){ bankFilter.q = this.value; renderBank(); });
+$("bankLvl").innerHTML = '<option value="">Toutes les classes</option>' + LEVELS.map(function(l,i){ return '<option value="'+i+'">'+l+'</option>'; }).join("");
+$("bankLvl").addEventListener("change", function(){ bankFilter.lvl = this.value; renderBank(); });
+$("bExpAll").addEventListener("click", function(){ if (!S.bank.length){ toast("La banque est vide"); return; } download("prl-lab-banque-" + new Date().toISOString().slice(0,10) + ".json", "application/json", packJSON(S.bank)); });
+$("bImp").addEventListener("click", function(){ $("fileIn").click(); });
+$("fileIn").addEventListener("change", function(){
+  var f = this.files && this.files[0]; if (!f) return;
+  var rd = new FileReader();
+  rd.onload = function(){
+    try{
+      var data = JSON.parse(rd.result), items = data.items || (data.length ? data : (data.phases ? [data] : []));
+      var n = 0;
+      items.forEach(function(it){
+        if (!it || !it.phases) return;
+        var x = extend(newPRL(), it);
+        if (bankIdx(x.id) > -1) x.id = uid();
+        S.bank.unshift(x); n++;
+      });
+      if (!n){ toast("Ce fichier ne contient pas de PRL"); return; }
+      lsSet(LS.bank, S.bank); renderBank(); toast(n + " PRL importé" + (n>1?"s":""));
+    }catch(e){ toast("Fichier illisible : choisissez un .json exporté par PRL Lab"); }
+  };
+  rd.readAsText(f); this.value = "";
+});
+function extend(a, b){ for (var k in b){ if (Object.prototype.hasOwnProperty.call(b,k)) a[k] = b[k]; } return a; }
+
+
+/* ---------- repères ---------- */
+function renderRefs(){
+  var levels = ["A1","A1+","A2","A2+","B1","B1+","B2"];
+  $("lvlMap").innerHTML = '<div class="lvlmap">' + levels.map(function(l){
+    var pts = KB.points.filter(function(p){ return p.cecrl === l; });
+    if (!pts.length) return "";
+    return '<div class="lvlcol"><h5>'+l+'</h5>' + pts.map(function(p){ return '<span style="background:'+catColor(p)+'" title="'+esc(p.prog)+'">'+esc(p.label)+'</span>'; }).join("") + '</div>';
+  }).join("") + '</div>';
+  $("axesRef").innerHTML = '<div class="refs">' + LEVELS.map(function(l, i){
+    var a = AXES[i];
+    var h = '<div class="ref"><h4>'+l+'</h4><p class="hint" style="margin:0 0 6px">'+esc(a.cur.label)+'</p><ol>' + a.cur.list.map(function(x){ return '<li>'+esc(x.n.replace(/^(Axe \d|Thème) · /,""))+(x.o.length?' <span class="hint">('+x.o.length+' objets d\'étude)</span>':'')+'</li>'; }).join("") + '</ol>';
+    if (a.next) h += '<p class="old">'+esc(a.next.label)+' : ' + a.next.list.map(function(x){ return esc(x.n.replace(/^Axe \d · /,"")); }).join(" ; ") + '</p>';
+    return h + '</div>';
+  }).join("") + '</div>';
+}
+
+/* ---------- theme ---------- */
+function applyTheme(t){ if (t === "dark") document.documentElement.setAttribute("data-theme","dark"); else document.documentElement.removeAttribute("data-theme"); $("themeBtn").textContent = t === "dark" ? "☀️ Clair" : "🌙 Sombre"; }
+var theme = lsGet(LS.theme, "light");
+applyTheme(theme);
+$("themeBtn").addEventListener("click", function(){ theme = theme === "dark" ? "light" : "dark"; lsSet(LS.theme, theme); applyTheme(theme); });
+
+/* ---------- init ---------- */
+var tabs = document.querySelectorAll(".tab");
+for (var ti=0; ti<tabs.length; ti++){ tabs[ti].addEventListener("click", function(){ setView(this.getAttribute("data-v")); }); }
+$("txt").value = S.text; $("docTitle").value = S.docTitle;
+if (!axeKnown(S.level, S.axe) && S.axe && S.axe.indexOf("·") > -1) S.axe = "";
+renderSettings();
+if (S.text && S.text.replace(/\s/g,"").length >= 20) S.res = analyse(S.text);
+renderResults(); renderRefs(); updateBankCount(); updateActionBar();
+})();
+
+</script>
+</body>
+</html>
